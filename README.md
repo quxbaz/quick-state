@@ -1,5 +1,5 @@
 # quick-state
-Lorem ipsum.
+Simple, immutable state management library.
 
 [License](#license).
 
