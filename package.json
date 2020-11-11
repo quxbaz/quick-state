@@ -28,10 +28,10 @@
     "typescript": "^4.0.5"
   },
   "scripts": {
-    "type-check": "tsc --watch --noEmit",
+    "type-check": "tsc --watch --noEmit --pretty",
     "test": "jest --watch",
     "test-ci": "jest --coverage --no-cache",
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "prepublishOnly": "npm run build",
     "postpublish": "rm -r lib/"
   }
