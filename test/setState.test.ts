@@ -90,8 +90,8 @@ describe('update()', () => {
       /*
         This one is a little funny. Even though we set:
           state[a][b] = c
-        The end result does not validate reference equality because we
-        end up destructuring the empty object in update(). Most likely
+        The end result does not pass reference equality because we end
+        up destructuring the empty object in update(). Most likely
         this will affect nothing because `props` will always take some
         value. If it comes to the case where we need to alter this
         behavior and return the same object that was passed, that's
