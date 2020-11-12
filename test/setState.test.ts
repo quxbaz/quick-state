@@ -2,139 +2,181 @@ import update from '../src/update'
 
 describe('update()', () => {
 
-  describe("Root merge", () => {
-    test("undefined", () => {
-      const nextState = update({}, [], undefined)
-      expect(nextState).toEqual({})
+  describe("Depth 0", () => {
+    test("path=[] props=undefined", () => {
+      const next = update({}, [], undefined)
+      expect(next).toEqual({})
     })
-    test("null", () => {
-      const nextState = update({}, [], null)
-      expect(nextState).toEqual({})
+    test("path=[] props=null", () => {
+      const next = update({}, [], null)
+      expect(next).toEqual({})
     })
-    test("boolean", () => {
-      const nextState = update({}, [], true)
-      expect(nextState).toEqual({})
+    test("path=[] props=boolean", () => {
+      const next = update({}, [], true)
+      expect(next).toEqual({})
     })
-    test("number", () => {
-      const nextState = update({}, [], 42)
-      expect(nextState).toEqual({})
+    test("path=[] props=number", () => {
+      const next = update({}, [], 42)
+      expect(next).toEqual({})
     })
-    test("string", () => {
-      const nextState = update({}, [], 'string')
-      expect(nextState).toEqual({})
+    test("path=[] props=string", () => {
+      const next = update({}, [], 'string')
+      expect(next).toEqual({})
     })
-    test("array", () => {
-      const nextState = update({}, [], [])
-      expect(nextState).toEqual({})
+    test("path=[] props=array", () => {
+      const next = update({}, [], [])
+      expect(next).toEqual({})
     })
-    test("object", () => {
-      const nextState = update({}, [], {})
-      expect(nextState).toEqual({})
+    test("path=[] props=object", () => {
+      const next = update({}, [], {})
+      expect(next).toEqual({})
     })
-    test("Symbol", () => {
-      const nextState = update({}, [], Symbol())
-      expect(nextState).toEqual({})
+    test("path=[] props=Symbol", () => {
+      const next = update({}, [], Symbol())
+      expect(next).toEqual({})
     })
-    test("Date", () => {
-      const nextState = update({}, [], new Date())
-      expect(nextState).toEqual({})
+    test("path=[] props=Date", () => {
+      const next = update({}, [], new Date())
+      expect(next).toEqual({})
     })
-    test("{k: undefined}", () => {
-      const nextState = update({}, [], {k: undefined})
-      expect(nextState).toEqual({k: undefined})
+    test("path=[] props={k: undefined}", () => {
+      const next = update({}, [], {k: undefined})
+      expect(next).toEqual({k: undefined})
     })
-    test("{k: null}", () => {
-      const nextState = update({}, [], {k: null})
-      expect(nextState).toEqual({k: null})
+    test("path=[] props={k: null}", () => {
+      const next = update({}, [], {k: null})
+      expect(next).toEqual({k: null})
     })
-    test("{k: 0}", () => {
-      const nextState = update({}, [], {k: 0})
-      expect(nextState).toEqual({k: 0})
+    test("path=[] props={k: 0}", () => {
+      const next = update({}, [], {k: 0})
+      expect(next).toEqual({k: 0})
     })
-    test("{k: 'string'}", () => {
-      const nextState = update({}, [], {k: 'string'})
-      expect(nextState).toEqual({k: 'string'})
+    test("path=[] props={k: 'string'}", () => {
+      const next = update({}, [], {k: 'string'})
+      expect(next).toEqual({k: 'string'})
     })
-    test("{k: []}", () => {
-      const nextState = update({}, [], {k: []})
-      expect(nextState).toEqual({k: []})
+    test("path=[] props={k: []}", () => {
+      const next = update({}, [], {k: []})
+      expect(next).toEqual({k: []})
     })
-    test("{k: {}}", () => {
-      const nextState = update({}, [], {k: {}})
-      expect(nextState).toEqual({k: {}})
+    test("path=[] props={k: {}}", () => {
+      const next = update({}, [], {k: {}})
+      expect(next).toEqual({k: {}})
     })
-    test("{a: {b: undefined}}", () => {
-      const nextState = update({}, [], {a: {b: undefined}})
-      expect(nextState).toEqual({a: {b: undefined}})
+    test("path=[] props={a: {b: undefined}}", () => {
+      const next = update({}, [], {a: {b: undefined}})
+      expect(next).toEqual({a: {b: undefined}})
     })
-    test("{a: {b: null}}", () => {
-      const nextState = update({}, [], {a: {b: undefined}})
-      expect(nextState).toEqual({a: {b: undefined}})
+    test("path=[] props={a: {b: null}}", () => {
+      const next = update({}, [], {a: {b: undefined}})
+      expect(next).toEqual({a: {b: undefined}})
     })
-    test("{a: {b: 0}}", () => {
-      const nextState = update({}, [], {a: {b: undefined}})
-      expect(nextState).toEqual({a: {b: undefined}})
+    test("path=[] props={a: {b: 0}}", () => {
+      const next = update({}, [], {a: {b: undefined}})
+      expect(next).toEqual({a: {b: undefined}})
     })
-    test("{a: {b: {}}}", () => {
-      const nextState = update({}, [], {a: {b: {}}})
-      expect(nextState).toEqual({a: {b: {}}})
+    test("path=[] props={a: {b: {}}}", () => {
+      const next = update({}, [], {a: {b: {}}})
+      expect(next).toEqual({a: {b: {}}})
     })
-    test("{a: {b: {c: undefined}}}", () => {
-      const nextState = update({}, [], {a: {b: {c: undefined}}})
-      expect(nextState).toEqual({a: {b: {c: undefined}}})
+    test("path=[] props={a: {b: {c: undefined}}}", () => {
+      const next = update({}, [], {a: {b: {c: undefined}}})
+      expect(next).toEqual({a: {b: {c: undefined}}})
     })
-    test("{a: {b: {c: null}}}", () => {
-      const nextState = update({}, [], {a: {b: {c: null}}})
-      expect(nextState).toEqual({a: {b: {c: null}}})
+    test("path=[] props={a: {b: {c: null}}}", () => {
+      const next = update({}, [], {a: {b: {c: null}}})
+      expect(next).toEqual({a: {b: {c: null}}})
     })
-    test("{a: {b: {c: 0}}}", () => {
-      const nextState = update({}, [], {a: {b: {c: 0}}})
-      expect(nextState).toEqual({a: {b: {c: 0}}})
+    test("path=[] props={a: {b: {c: 0}}}", () => {
+      const next = update({}, [], {a: {b: {c: 0}}})
+      expect(next).toEqual({a: {b: {c: 0}}})
     })
-    test("{a: {b: {c: 'string'}}}", () => {
-      const nextState = update({}, [], {a: {b: {c: 'string'}}})
-      expect(nextState).toEqual({a: {b: {c: 'string'}}})
+    test("path=[] props={a: {b: {c: 'string'}}}", () => {
+      const next = update({}, [], {a: {b: {c: 'string'}}})
+      expect(next).toEqual({a: {b: {c: 'string'}}})
     })
-    test("{a: {b: {c: {d: undefined}}}}", () => {
-      const nextState = update({}, [], {a: {b: {c: {d: undefined}}}})
-      expect(nextState).toEqual({a: {b: {c: {d: undefined}}}})
+    test("path=[] props={a: {b: {c: {d: undefined}}}}", () => {
+      const next = update({}, [], {a: {b: {c: {d: undefined}}}})
+      expect(next).toEqual({a: {b: {c: {d: undefined}}}})
     })
-    test("{a: {b: {c: {d: null}}}}", () => {
-      const nextState = update({}, [], {a: {b: {c: {d: null}}}})
-      expect(nextState).toEqual({a: {b: {c: {d: null}}}})
+    test("path=[] props={a: {b: {c: {d: null}}}}", () => {
+      const next = update({}, [], {a: {b: {c: {d: null}}}})
+      expect(next).toEqual({a: {b: {c: {d: null}}}})
     })
-    test("{a: {b: {c: {d: 0}}}}", () => {
-      const nextState = update({}, [], {a: {b: {c: {d: 0}}}})
-      expect(nextState).toEqual({a: {b: {c: {d: 0}}}})
+    test("path=[] props={a: {b: {c: {d: 0}}}}", () => {
+      const next = update({}, [], {a: {b: {c: {d: 0}}}})
+      expect(next).toEqual({a: {b: {c: {d: 0}}}})
     })
-    test("{a: {b: {c: {d: 'string'}}}}", () => {
-      const nextState = update({}, [], {a: {b: {c: {d: 'string'}}}})
-      expect(nextState).toEqual({a: {b: {c: {d: 'string'}}}})
+    test("path=[] props={a: {b: {c: {d: 'string'}}}}", () => {
+      const next = update({}, [], {a: {b: {c: {d: 'string'}}}})
+      expect(next).toEqual({a: {b: {c: {d: 'string'}}}})
     })
-    test("{a: {b: {c: {d: {}}}}}", () => {
-      const nextState = update({}, [], {a: {b: {c: {d: {}}}}})
-      expect(nextState).toEqual({a: {b: {c: {d: {}}}}})
+    test("path=[] props={a: {b: {c: {d: {}}}}}", () => {
+      const next = update({}, [], {a: {b: {c: {d: {}}}}})
+      expect(next).toEqual({a: {b: {c: {d: {}}}}})
+    })
+    test("path=[] props=undefined # With siblings", () => {
+      const state = {a: {}, b: {}}
+      const next = update(state, [], undefined)
+      expect(next).toEqual({a: {}, b: {}})
+    })
+    test("path=[] props=null  # With siblings", () => {
+      const state = {a: {}, b: {}}
+      const next = update(state, [], null)
+      expect(next).toEqual({a: {}, b: {}})
     })
   })
 
-  describe("Sibling update - Depth 1", () => {
-    test("jk", () => {
-      expect(1).toEqual(1)
+  describe("Depth 1", () => {
+    test("path=[a] props=undefined", () => {
+      const state = {a: {}, b: {}}
+      const next = update(state, ['a'], undefined)
+      expect(next).toEqual({a: undefined, b: {}})
     })
-    // test("Nested merge", () => {
-    //   const state: any = {
-    //     lists: {
-    //       '0': {id: '0', title: 'Title 0', length: 10},
-    //       '1': {id: '1', title: 'Title 1', length: 20},
-    //     },
-    //     notes: {
-    //       a: {id: 'a', text: 'Note A'},
-    //       b: {id: 'b', text: 'Note B'},
-    //     },
-    //   }
-    // })
+    test("path=[a] props=null", () => {
+      const state = {a: {}, b: {}}
+      const next = update(state, ['a'], null)
+      expect(next).toEqual({a: null, b: {}})
+    })
+    test("path=[b] props=null", () => {
+      const state = {a: {}, b: {}}
+      const next = update(state, ['b'], null)
+      expect(next).toEqual({a: {}, b: null})
+    })
+    test("path=[c] props=null", () => {
+      const state = {a: {}, b: {}, c: {}}
+      const next = update(state, ['c'], null)
+      expect(next).toEqual({a: {}, b: {}, c: null})
+    })
+    test("path=[a] props=42", () => {
+      const state = {a: {}, b: {}}
+      const next = update(state, ['a'], 42)
+      expect(next).toEqual({a: 42, b: {}})
+    })
+    test("path=[a] props={}", () => {
+      const state = {a: {}, b: {}}
+      const next = update(state, ['a'], {})
+      expect(next).toEqual({a: {}, b: {}})
+    })
+    test("path=[a] props={x: null}", () => {
+      const state = {a: {}, b: {}}
+      const next = update(state, ['a'], {x: null})
+      expect(next).toEqual({a: {x: null}, b: {}})
+    })
+    test("path=[a] props={x: {}}", () => {
+      const state = {a: {}, b: {}}
+      const next = update(state, ['a'], {x: {}})
+      expect(next).toEqual({a: {x: {}}, b: {}})
+    })
   })
 
+  // describe("Depth 2", () => {
+  //   test("['a', 'b'] props=undefined", () => {
+  //     const state = {a: {b: {}}, x: {}}
+  //     const next = update(state, ['a', 'b'], undefined)
+  //     expect(next).toEqual({a: undefined, x: {}})
+  //   })
+  // })
 
   //   // const actual = update(
   //   //   state,
