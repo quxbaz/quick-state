@@ -1,7 +1,7 @@
 import {Key, PlainObject} from './types'
 
 const isObject = (value: any) => (
-  typeof value === 'object' && value.toString() === '[object Object]'
+  Object.prototype.toString.call(value) === '[object Object]'
 )
 
 /*
