@@ -390,4 +390,60 @@ describe('update()', () => {
     })
   })
 
+  describe("Somewhat arbitrary tests with more realistic data", () => {
+
+    const state = {
+      lists: {
+        0: {id: '0', title: 'Food', notes: ['a', 'b']},
+        1: {id: '1', title: 'Chores', notes: ['c', 'd']},
+        2: {id: '2', title: 'Gifts', notes: ['e', 'f']},
+      },
+      notes: {
+        a: {id: 'a', text: 'Carrots'},
+        b: {id: 'b', text: 'Cake'},
+        c: {id: 'c', text: 'Vacuum'},
+        d: {id: 'd', text: 'Clean bathroom'},
+        e: {id: 'e', text: 'Earrings'},
+        f: {id: 'e', text: 'Necklace'},
+      },
+    }
+
+    test("test", () => {
+      const next = update(state, ['lists', '0'], {title: null})
+      expect(next).toEqual({
+        ...state, lists: {...state.lists, 0: {...state.lists[0], title: null}},
+      })
+    })
+
+    test("test", () => {
+      const next = update(state, ['lists', '0'], {title: 'FOOD'})
+      expect(next).toEqual({
+        ...state, lists: {...state.lists, 0: {...state.lists[0], title: 'FOOD'}},
+      })
+    })
+
+    test("test", () => {
+      const next = update(state, ['lists', '1'], {title: 'CHORES', isDone: false})
+      expect(next).toEqual({
+        ...state, lists: {...state.lists, 1: {...state.lists[1], title: 'CHORES', isDone: false}},
+      })
+    })
+
+    test("test", () => {
+      const next = update(state, ['lists', '0'], {notes: ['a', 'b', 'c']})
+      expect(next).toEqual({
+        ...state, lists: {...state.lists, 0: {...state.lists[0], notes: ['a', 'b', 'c']}},
+      })
+    })
+
+    // ::RESUME::
+    test("test", () => {
+      const next = update(state, ['lists', '3'], {id: '3', title: 'Tools', notes: []})
+      expect(next).toEqual({
+        ...state, lists: {...state.lists, 3: {title: 'Tools'}},
+      })
+    })
+
+  })
+
 })
