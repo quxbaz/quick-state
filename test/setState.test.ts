@@ -100,6 +100,34 @@ describe('update()', () => {
       expect(next.a.b).not.toBe(stateC)
     })
 
+    test("Depth=2 -- With children at root", () => {
+      const valueX = {}
+      const stateC = {}
+      const stateB = {b: stateC}
+      const stateA = {a: stateB, x: valueX}
+      const next = update(stateA, ['a'], stateB)
+      expect(next).toEqual(stateA)
+      expect(next).not.toBe(stateA)
+      expect(next.a).not.toBe(stateB)
+      expect(next.a.b).toBe(stateC)
+      expect(next.x).toBe(valueX)
+    })
+
+    test("Depth=2 -- With children at root", () => {
+      const valueX = {1: 'one'}
+      const valueY = {}
+      const stateC = {}
+      const stateB = {b: stateC}
+      const stateA = {a: stateB, x: valueX, y: valueY}
+      const next = update(stateA, ['a'], stateB)
+      expect(next).toEqual(stateA)
+      expect(next).not.toBe(stateA)
+      expect(next.a).not.toBe(stateB)
+      expect(next.a.b).toBe(stateC)
+      expect(next.x).toBe(valueX)
+      expect(next.y).toBe(valueY)
+    })
+
   })
 
   describe("Depth=0", () => {
