@@ -52,6 +52,7 @@ describe('update', () => {
     expect(nextState).toEqual({foo: undefined})
   })
 
+  // ::RESUME::
   // test("Root merge non-empty object.", () => {
   //   const nextState = update({}, [], {foo: undefined})
   //   expect(nextState).toEqual({foo: undefined})
