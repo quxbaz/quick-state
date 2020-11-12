@@ -361,14 +361,12 @@ describe('update()', () => {
     })
   })
 
-  describe("Arrays are overwritten, not merged", () => {
-
+  describe("Arrays are replaced, not mutated", () => {
     test("[] -> []", () => {
       const state = {a: []}
       const next = update(state, ['a'], [])
       expect(next).toEqual({a: []})
     })
-
     test("[1] -> [1]", () => {
       const state = {a: [1]}
       const next = update(state, ['a'], [1])
@@ -376,7 +374,20 @@ describe('update()', () => {
       expect(next).not.toBe(state)
       expect(next.a).not.toBe(state.a)
     })
-
+    test("[1] -> [2]", () => {
+      const state = {a: [1]}
+      const next = update(state, ['a'], [2])
+      expect(next).toEqual({a: [2]})
+      expect(next).not.toBe(state)
+      expect(next.a).not.toBe(state.a)
+    })
+    test("[1] -> [1, 2]", () => {
+      const state = {a: [1]}
+      const next = update(state, ['a'], [1, 2])
+      expect(next).toEqual({a: [1, 2]})
+      expect(next).not.toBe(state)
+      expect(next.a).not.toBe(state.a)
+    })
   })
 
 })
