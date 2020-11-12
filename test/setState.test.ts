@@ -69,16 +69,6 @@ describe('update()', () => {
       expect(next).toEqual(state)
       expect(next).not.toBe(state)
       expect(next.a).not.toBe(state.a)
-      /*
-        This one is a little funny. Even though we set:
-          state[a][b] = c
-        The end result does not pass reference equality because we end
-        up destructuring the empty object in update(). Most likely
-        this will affect nothing because `props` will always take some
-        value. If it comes to the case where we need to alter this
-        behavior and return the same object that was passed, that's
-        fine.
-      */
       expect(next.a.b).not.toBe(state.a.b)
     })
     test("Depth=2 -- With children at root", () => {
@@ -101,14 +91,47 @@ describe('update()', () => {
       expect(next.y).toBe(state.y)
     })
 
-    // test("Depth=2", () => {
-    //   const state = {a: {b: {}}}
-    //   const next = update(state, [], null)
-    //   expect(next).toEqual(state)
-    //   expect(next).not.toBe(state)
-    //   expect(next.a).toBe(state.a)
-    //   expect(next.a.b).toBe(state.a.b)
-    // })
+    test("Depth=3", () => {
+      const state = {a: {b: {c: {}}}}
+      const next = update(state, [], null)
+      expect(next).toEqual(state)
+      expect(next).not.toBe(state)
+      expect(next.a).toBe(state.a)
+      expect(next.a.b).toBe(state.a.b)
+      expect(next.a.b.c).toBe(state.a.b.c)
+    })
+
+    test("Depth=3", () => {
+      const state = {a: {b: {c: {}}}}
+      const next = update(state, ['a', 'b', 'c'], {})
+      expect(next).toEqual(state)
+      expect(next).not.toBe(state)
+      expect(next.a).not.toBe(state.a)
+      expect(next.a.b).not.toBe(state.a.b)
+      expect(next.a.b.c).not.toBe(state.a.b.c)
+    })
+
+    test("Depth=4", () => {
+      const state = {a: {b: {c: {d: {}}}}}
+      const next = update(state, [], null)
+      expect(next).toEqual(state)
+      expect(next).not.toBe(state)
+      expect(next.a).toBe(state.a)
+      expect(next.a.b).toBe(state.a.b)
+      expect(next.a.b.c).toBe(state.a.b.c)
+      expect(next.a.b.c.d).toBe(state.a.b.c.d)
+    })
+
+    test("Depth=4", () => {
+      const state = {a: {b: {c: {d: {}}}}}
+      const next = update(state, ['a', 'b', 'c', 'd'], {})
+      expect(next).toEqual(state)
+      expect(next).not.toBe(state)
+      expect(next.a).not.toBe(state.a)
+      expect(next.a.b).not.toBe(state.a.b)
+      expect(next.a.b.c).not.toBe(state.a.b.c)
+      expect(next.a.b.c.d).not.toBe(state.a.b.c.d)
+    })
 
   })
 
