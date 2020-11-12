@@ -1,132 +1,111 @@
-/* Lists */
+// /* Lists */
 
-const listInitState = {
-  id: '',
-  title: '',
-  notes: [],
-}
-
-const setListTitle = (id, title) => ({
-  name: 'lists/set-title',
-  path: ['lists', id],
-  state: {title},
-})
-
-const createList = (id, title) => ({
-  name: 'lists/create-list',
-  path: ['lists', id],
-  state: {...listInitState, id, title},
-})
-
-// const createList2 = (title) => {
-//   const id = '0'
-//   return {
-//     name: 'lists/create-list',
-//     path: ['lists'],
-//     state: (lists, state) => ({
-//       ...lists,
-//       [id]: {...listInitState, id, title},
-//     }),
-//   }
+// const listInitState = {
+//   id: '',
+//   title: '',
+//   notes: [],
 // }
 
-const deleteNote = (id, note) => [
-  {
-    name: 'lists/remove-note',
-    path: ['lists', listId],
-    state: (list) => ({
-      ...list,
-      notes: without(list.notes, note),
-    })
-  },
-  destroyNote(note),
-]
+// const setListTitle = (id, title) => ({
+//   name: 'lists/set-title',
+//   path: ['lists', id],
+//   state: {title},
+// })
 
-/* Notes */
+// const createList = (id, title) => ({
+//   name: 'lists/create-list',
+//   path: ['lists', id],
+//   state: {...listInitState, id, title},
+// })
 
-const setNoteText = (id, text) => ({
-  name: 'notes/set-node-text',
-  path: ['notes', id, 'text'],
-  state: text,
-})
+// // const createList2 = (title) => {
+// //   const id = '0'
+// //   return {
+// //     name: 'lists/create-list',
+// //     path: ['lists'],
+// //     state: (lists, state) => ({
+// //       ...lists,
+// //       [id]: {...listInitState, id, title},
+// //     }),
+// //   }
+// // }
 
-const setNoteText = (id, text) => ({
-  name: 'notes/set-node-text',
-  path: ['notes', id],
-  state: {text},
-})
+// const deleteNote = (id, note) => [
+//   {
+//     name: 'lists/remove-note',
+//     path: ['lists', listId],
+//     state: (list) => ({
+//       ...list,
+//       notes: without(list.notes, note),
+//     })
+//   },
+//   destroyNote(note),
+// ]
 
-const destroyNote = (id) => ({
-  name: 'notes/destroy-note',
-  path: ['notes'],
-  state: (notes) => omit(notes, id),
-})
+// /* Notes */
 
-/* Store */
+// const setNoteText = (id, text) => ({
+//   name: 'notes/set-node-text',
+//   path: ['notes', id, 'text'],
+//   state: text,
+// })
 
-const initState = {
-  lists: {},
-  notes: {},
-}
+// const setNoteText = (id, text) => ({
+//   name: 'notes/set-node-text',
+//   path: ['notes', id],
+//   state: {text},
+// })
 
+// const destroyNote = (id) => ({
+//   name: 'notes/destroy-note',
+//   path: ['notes'],
+//   state: (notes) => omit(notes, id),
+// })
 
-// function mergeStateAtPath (object, path, state) {
-//   const head = path[0]
-//   const rest = path.slice(1)
-//   if (path.length === 1)
-//     return {...object[head], ...state}
-//   return {
-//     ...object,
-//     ...mergeStateAtPath(
-//       object[head],
-//       rest,
-//       state
-//     )
-//   }
+// /* Store */
+
+// const initState = {
+//   lists: {},
+//   notes: {},
 // }
 
-{
-  ...lists,
+// const createStore = (initState) => {
 
-}
+//   let _vars = {
+//     storeState: initState,
+//   }
 
-const createStore = (initState) => {
+//   return {
+//     mergeTransform: ({path, state}) => {
 
-  let _vars = {
-    storeState: initState,
-  }
+//       // const stateAtPath = path.reduce(
+//       //   (currentState, path) => currentState[path],
+//       //   _vars.storeState
+//       // )
 
-  return {
-    mergeTransform: ({path, state}) => {
+//       // if stateAtPath === undefined ...
 
-      // const stateAtPath = path.reduce(
-      //   (currentState, path) => currentState[path],
-      //   _vars.storeState
-      // )
+//       // _vars.storeState = {
+//       //   ..._vars.storeState,
+//       //   lists: {
+//       //     ...lists,
+//       //     [id]: state,
+//       //   }
+//       // }
 
-      // if stateAtPath === undefined ...
+//       const nextState = path.reduce(
+//         (state, path) => ({
+//           ...state,
 
-      // _vars.storeState = {
-      //   ..._vars.storeState,
-      //   lists: {
-      //     ...lists,
-      //     [id]: state,
-      //   }
-      // }
+//         }),
+//         _vars.storeState
+//       )
 
-      const nextState = path.reduce(
-        (state, path) => ({
-          ...state,
+//     }
+//   }
 
-        }),
-        _vars.storeState
-      )
+// }
 
-    }
-  }
+// // store.
 
-}
-
-// store.
-
-const store = createStore(initState)
+// const store = createStore(initState)
