@@ -25,7 +25,7 @@ function update (object: PlainObject, path: Key[], props: any): PlainObject {
   if (path.length === 0) {
     // Warning: You are dynamically creating a top-level namespace. Normally you
     // would define this in your initial state object.
-    return {...object, ...props}
+    return isObject(props) ? {...object, ...props} : object
   }
 
   const head: Key = path[0]
