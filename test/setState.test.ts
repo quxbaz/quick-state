@@ -34,49 +34,41 @@ describe('update()', () => {
       expect(next).not.toBe(state)
     })
     test("Depth=1", () => {
-      const stateB = {}
-      const stateA = {a: stateB}
-      const next = update(stateA, [], null)
-      expect(next).toEqual(stateA)
-      expect(next).not.toBe(stateA)
-      expect(next.a).toBe(stateB)
+      const state = {a: {}}
+      const next = update(state, [], null)
+      expect(next).toEqual(state)
+      expect(next).not.toBe(state)
+      expect(next.a).toBe(state.a)
     })
     test("Depth=1", () => {
-      const stateB = {}
-      const stateA = {a: stateB}
-      const next = update(stateA, ['a'], {})
-      expect(next).toEqual(stateA)
-      expect(next).not.toBe(stateA)
-      expect(next.a).not.toBe(stateB)
+      const state = {a: {}}
+      const next = update(state, ['a'], {})
+      expect(next).toEqual(state)
+      expect(next).not.toBe(state)
+      expect(next.a).not.toBe(state.a)
     })
     test("Depth=2", () => {
-      const stateC = {}
-      const stateB = {b: stateC}
-      const stateA = {a: stateB}
-      const next = update(stateA, [], null)
-      expect(next).toEqual(stateA)
-      expect(next).not.toBe(stateA)
-      expect(next.a).toBe(stateB)
-      expect(next.a.b).toBe(stateC)
+      const state = {a: {b: {}}}
+      const next = update(state, [], null)
+      expect(next).toEqual(state)
+      expect(next).not.toBe(state)
+      expect(next.a).toBe(state.a)
+      expect(next.a.b).toBe(state.a.b)
     })
     test("Depth=2", () => {
-      const stateC = {}
-      const stateB = {b: stateC}
-      const stateA = {a: stateB}
-      const next = update(stateA, ['a'], stateB)
-      expect(next).toEqual(stateA)
-      expect(next).not.toBe(stateA)
-      expect(next.a).not.toBe(stateB)
-      expect(next.a.b).toBe(stateC)
+      const state = {a: {b: {}}}
+      const next = update(state, ['a'], state.a)
+      expect(next).toEqual(state)
+      expect(next).not.toBe(state)
+      expect(next.a).not.toBe(state.a)
+      expect(next.a.b).toBe(state.a.b)
     })
     test("Depth=2", () => {
-      const stateC = {}
-      const stateB = {b: stateC}
-      const stateA = {a: stateB}
-      const next = update(stateA, ['a', 'b'], stateC)
-      expect(next).toEqual(stateA)
-      expect(next).not.toBe(stateA)
-      expect(next.a).not.toBe(stateB)
+      const state = {a: {b: {}}}
+      const next = update(state, ['a', 'b'], state.a.b)
+      expect(next).toEqual(state)
+      expect(next).not.toBe(state)
+      expect(next.a).not.toBe(state.a)
       /*
         This one is a little funny. Even though we set:
           state[a][b] = c
@@ -87,34 +79,37 @@ describe('update()', () => {
         behavior and return the same object that was passed, that's
         fine.
       */
-      expect(next.a.b).not.toBe(stateC)
+      expect(next.a.b).not.toBe(state.a.b)
     })
     test("Depth=2 -- With children at root", () => {
-      const valueX = {}
-      const stateC = {}
-      const stateB = {b: stateC}
-      const stateA = {a: stateB, x: valueX}
-      const next = update(stateA, ['a'], stateB)
-      expect(next).toEqual(stateA)
-      expect(next).not.toBe(stateA)
-      expect(next.a).not.toBe(stateB)
-      expect(next.a.b).toBe(stateC)
-      expect(next.x).toBe(valueX)
+      const state = {a: {b: {}}, x: {}}
+      const next = update(state, ['a'], state.a)
+      expect(next).toEqual(state)
+      expect(next).not.toBe(state)
+      expect(next.a).not.toBe(state.a)
+      expect(next.a.b).toBe(state.a.b)
+      expect(next.x).toBe(state.x)
     })
     test("Depth=2 -- With children at root", () => {
-      const valueX = {1: 'one'}
-      const valueY = {}
-      const stateC = {}
-      const stateB = {b: stateC}
-      const stateA = {a: stateB, x: valueX, y: valueY}
-      const next = update(stateA, ['a'], stateB)
-      expect(next).toEqual(stateA)
-      expect(next).not.toBe(stateA)
-      expect(next.a).not.toBe(stateB)
-      expect(next.a.b).toBe(stateC)
-      expect(next.x).toBe(valueX)
-      expect(next.y).toBe(valueY)
+      const state = {a: {b: {}}, x: {}, y: {}}
+      const next = update(state, ['a'], state.a)
+      expect(next).toEqual(state)
+      expect(next).not.toBe(state)
+      expect(next.a).not.toBe(state.a)
+      expect(next.a.b).toBe(state.a.b)
+      expect(next.x).toBe(state.x)
+      expect(next.y).toBe(state.y)
     })
+
+    // test("Depth=2", () => {
+    //   const state = {a: {b: {}}}
+    //   const next = update(state, [], null)
+    //   expect(next).toEqual(state)
+    //   expect(next).not.toBe(state)
+    //   expect(next.a).toBe(state.a)
+    //   expect(next.a.b).toBe(state.a.b)
+    // })
+
   })
 
   describe("Depth=0", () => {
@@ -343,56 +338,22 @@ describe('update()', () => {
     })
   })
 
-  //   // const actual = update(
-  //   //   state,
-  //   //   ['lists', '0'],
-  //   //   {title: 'New Title'}
-  //   // )
+  describe("Arrays are overwritten, not merged", () => {
 
-  //   // const actual = update(
-  //   //   state,
-  //   //   ['lists', '0', 'title'],
-  //   //   'TITLE 0'
-  //   // )
+    test("[] -> []", () => {
+      const state = {a: []}
+      const next = update(state, ['a'], [])
+      expect(next).toEqual({a: []})
+    })
 
-  //   // const actual = update(
-  //   //   state,
-  //   //   ['lists', '0'],
-  //   //   42
-  //   // )
+    test("[1] -> [1]", () => {
+      const state = {a: [1]}
+      const next = update(state, ['a'], [1])
+      expect(next).toEqual({a: [1]})
+      expect(next).not.toBe(state)
+      expect(next.a).not.toBe(state.a)
+    })
 
-  //   // const actual = update(
-  //   //   state,
-  //   //   ['lists'],
-  //   //   84
-  //   // )
+  })
 
-  //   // const actual = update(
-  //   //   state,
-  //   //   [],
-  //   //   'new-path'
-  //   // )
-
-  //   // const actual = update(
-  //   //   state,
-  //   //   [],
-  //   //   {'new-path': {'new': 'path'}}
-  //   // )
-
-  //   const actual = update(
-  //     state,
-  //     ['notes', 'c'],
-  //     {id: 'c', text: 'Note C'}
-  //   )
-
-  //   // const actual = update(
-  //   //   state,
-  //   //   ['notes', 'c'],
-  //   //   'c'
-  //   // )
-
-  //   // const expected = {list: {id: '0', title: 'New Title', length: 10}}
-  //   // expect(actual).toEqual(expected)
-
-  // })
 })
