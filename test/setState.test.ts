@@ -2,7 +2,107 @@ import update from '../src/update'
 
 describe('update()', () => {
 
-  describe("Depth 0", () => {
+  describe("Returns new object", () => {
+
+    test("Depth=0", () => {
+      const state = {}
+      const next = update(state, [], null)
+      expect(next).toEqual({})
+      expect(next).not.toBe(state)
+    })
+
+    test("Depth=0", () => {
+      const state = {a: 1}
+      const next = update(state, [], null)
+      expect(next).toEqual({a: 1})
+      expect(next).not.toBe(state)
+    })
+
+    test("Depth=0", () => {
+      const state = {a: {}}
+      const next = update(state, [], null)
+      expect(next).toEqual({a: {}})
+      expect(next).not.toBe(state)
+    })
+
+    test("Depth=0 Children=2", () => {
+      const state = {a: 1, b: 2}
+      const next = update(state, [], null)
+      expect(next).toEqual({a: 1, b: 2})
+      expect(next).not.toBe(state)
+    })
+
+    test("Depth=0 Children=3", () => {
+      const state = {a: 1, b: 2, c: 3}
+      const next = update(state, [], null)
+      expect(next).toEqual({a: 1, b: 2, c: 3})
+      expect(next).not.toBe(state)
+    })
+
+    test("Depth=1", () => {
+      const stateB = {}
+      const stateA = {a: stateB}
+      const next = update(stateA, [], null)
+      expect(next).toEqual(stateA)
+      expect(next).not.toBe(stateA)
+      expect(next.a).toBe(stateB)
+    })
+
+    test("Depth=1", () => {
+      const stateB = {}
+      const stateA = {a: stateB}
+      const next = update(stateA, ['a'], {})
+      expect(next).toEqual(stateA)
+      expect(next).not.toBe(stateA)
+      expect(next.a).not.toBe(stateB)
+    })
+
+    test("Depth=2", () => {
+      const stateC = {}
+      const stateB = {b: stateC}
+      const stateA = {a: stateB}
+      const next = update(stateA, [], null)
+      expect(next).toEqual(stateA)
+      expect(next).not.toBe(stateA)
+      expect(next.a).toBe(stateB)
+      expect(next.a.b).toBe(stateC)
+    })
+
+    test("Depth=2", () => {
+      const stateC = {}
+      const stateB = {b: stateC}
+      const stateA = {a: stateB}
+      const next = update(stateA, ['a'], stateB)
+      expect(next).toEqual(stateA)
+      expect(next).not.toBe(stateA)
+      expect(next.a).not.toBe(stateB)
+      expect(next.a.b).toBe(stateC)
+    })
+
+    test("Depth=2", () => {
+      const stateC = {}
+      const stateB = {b: stateC}
+      const stateA = {a: stateB}
+      const next = update(stateA, ['a', 'b'], stateC)
+      expect(next).toEqual(stateA)
+      expect(next).not.toBe(stateA)
+      expect(next.a).not.toBe(stateB)
+      /*
+        This one is a little funny. Even though we set:
+          state[a][b] = c
+        The end result does not validate reference equality because we
+        end up destructuring the empty object in update(). Most likely
+        this will affect nothing because `props` will always take some
+        value. If it comes to the case where we need to alter this
+        behavior and return the same object that was passed, that's
+        fine.
+      */
+      expect(next.a.b).not.toBe(stateC)
+    })
+
+  })
+
+  describe("Depth=0", () => {
     test("path=[] props=undefined", () => {
       const next = update({}, [], undefined)
       expect(next).toEqual({})
@@ -127,7 +227,7 @@ describe('update()', () => {
     })
   })
 
-  describe("Depth 1", () => {
+  describe("Depth=1", () => {
     test("path=[a] props=undefined", () => {
       const state = {a: {}, b: {}}
       const next = update(state, ['a'], undefined)
@@ -170,7 +270,7 @@ describe('update()', () => {
     })
   })
 
-  describe("Depth 2", () => {
+  describe("Depth=2", () => {
 
     test("path=['a', 'b'] props=undefined", () => {
       const state = {a: {b: {}}, x: {}}
