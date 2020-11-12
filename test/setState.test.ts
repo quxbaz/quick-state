@@ -3,42 +3,36 @@ import update from '../src/update'
 describe('update()', () => {
 
   describe("Returns new object", () => {
-
     test("Depth=0", () => {
       const state = {}
       const next = update(state, [], null)
       expect(next).toEqual({})
       expect(next).not.toBe(state)
     })
-
     test("Depth=0", () => {
       const state = {a: 1}
       const next = update(state, [], null)
       expect(next).toEqual({a: 1})
       expect(next).not.toBe(state)
     })
-
     test("Depth=0", () => {
       const state = {a: {}}
       const next = update(state, [], null)
       expect(next).toEqual({a: {}})
       expect(next).not.toBe(state)
     })
-
     test("Depth=0 Children=2", () => {
       const state = {a: 1, b: 2}
       const next = update(state, [], null)
       expect(next).toEqual({a: 1, b: 2})
       expect(next).not.toBe(state)
     })
-
     test("Depth=0 Children=3", () => {
       const state = {a: 1, b: 2, c: 3}
       const next = update(state, [], null)
       expect(next).toEqual({a: 1, b: 2, c: 3})
       expect(next).not.toBe(state)
     })
-
     test("Depth=1", () => {
       const stateB = {}
       const stateA = {a: stateB}
@@ -47,7 +41,6 @@ describe('update()', () => {
       expect(next).not.toBe(stateA)
       expect(next.a).toBe(stateB)
     })
-
     test("Depth=1", () => {
       const stateB = {}
       const stateA = {a: stateB}
@@ -56,7 +49,6 @@ describe('update()', () => {
       expect(next).not.toBe(stateA)
       expect(next.a).not.toBe(stateB)
     })
-
     test("Depth=2", () => {
       const stateC = {}
       const stateB = {b: stateC}
@@ -67,7 +59,6 @@ describe('update()', () => {
       expect(next.a).toBe(stateB)
       expect(next.a.b).toBe(stateC)
     })
-
     test("Depth=2", () => {
       const stateC = {}
       const stateB = {b: stateC}
@@ -78,7 +69,6 @@ describe('update()', () => {
       expect(next.a).not.toBe(stateB)
       expect(next.a.b).toBe(stateC)
     })
-
     test("Depth=2", () => {
       const stateC = {}
       const stateB = {b: stateC}
@@ -99,7 +89,6 @@ describe('update()', () => {
       */
       expect(next.a.b).not.toBe(stateC)
     })
-
     test("Depth=2 -- With children at root", () => {
       const valueX = {}
       const stateC = {}
@@ -112,7 +101,6 @@ describe('update()', () => {
       expect(next.a.b).toBe(stateC)
       expect(next.x).toBe(valueX)
     })
-
     test("Depth=2 -- With children at root", () => {
       const valueX = {1: 'one'}
       const valueY = {}
@@ -127,7 +115,6 @@ describe('update()', () => {
       expect(next.x).toBe(valueX)
       expect(next.y).toBe(valueY)
     })
-
   })
 
   describe("Depth=0", () => {
