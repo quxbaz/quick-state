@@ -1,7 +1,19 @@
 Todo
 
 * Todo
-  --
+  - [ ] Use function.toString by default if name parameter is missing
+    from transform.
+  - [ ] Rename functions: merge, batchMerge.
 
 * Features
   --
+
+* Major features
+  - [ ] DevTools
+
+* API/driver pattern
+  - [ ] Record transforms in API calls and allow them to be grouped
+    together somehow even through non-synchronous calls.
+
+* Docs
+  - [ ] API/driver pattern to interface with "physical" APIs.
