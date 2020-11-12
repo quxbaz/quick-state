@@ -286,73 +286,61 @@ describe('update()', () => {
   })
 
   describe("Depth=2", () => {
-
     test("path=['a', 'b'] props=undefined", () => {
       const state = {a: {b: {}}, x: {}}
       const next = update(state, ['a', 'b'], undefined)
       expect(next).toEqual({a: {b: undefined}, x: {}})
     })
-
     test("path=['a', 'b'] props=null", () => {
       const state = {a: {b: {}}, x: {}}
       const next = update(state, ['a', 'b'], null)
       expect(next).toEqual({a: {b: null}, x: {}})
     })
-
     test("path=['a', 'b'] props=42", () => {
       const state = {a: {b: {}}, x: {}}
       const next = update(state, ['a', 'b'], 42)
       expect(next).toEqual({a: {b: 42}, x: {}})
     })
-
     test("path=['a', 'b'] props={}", () => {
       const state = {a: {b: {}}, x: {}}
       const next = update(state, ['a', 'b'], {})
       expect(next).toEqual({a: {b: {}}, x: {}})
     })
-
     test("path=['a', 'b'] props='string'", () => {
       const state = {a: {b: {}}, x: {}}
       const next = update(state, ['a', 'b'], 'string')
       expect(next).toEqual({a: {b: 'string'}, x: {}})
     })
-
     test("path=['a', 'b'] props=null  -- With depth 2 sibling", () => {
       const state = {a: {b: {}, c: {}}, x: {}}
       const next = update(state, ['a', 'b'], null)
       expect(next).toEqual({a: {b: null, c: {}}, x: {}})
     })
-
     test("path=['a', 'b'] props=null  -- With existing state", () => {
       const state = {a: {b: {0: 'zero', 1: 'one'}}, x: {}}
       const next = update(state, ['a', 'b'], null)
       expect(next).toEqual({a: {b: null}, x: {}})
     })
-
     test("path=['a', 'b'] props={0: 'zero', 1: 'one'}  -- Props same as existing state", () => {
       const state = {a: {b: {0: 'zero', 1: 'one'}}, x: {}}
       const next = update(state, ['a', 'b'], {0: 'zero', 1: 'one'})
       expect(next).toEqual({a: {b: {0: 'zero', 1: 'one'}}, x: {}})
     })
-
     test("path=['a', 'b'] props={0: 'ZERO'}", () => {
       const state = {a: {b: {0: 'zero', 1: 'one'}}, x: {}}
       const next = update(state, ['a', 'b'], {0: 'ZERO'})
       expect(next).toEqual({a: {b: {0: 'ZERO', 1: 'one'}}, x: {}})
     })
-
     test("path=['a', 'b'] props={1: 'ONE'}", () => {
       const state = {a: {b: {0: 'zero', 1: 'one'}}, x: {}}
       const next = update(state, ['a', 'b'], {1: 'ONE'})
       expect(next).toEqual({a: {b: {0: 'zero', 1: 'ONE'}}, x: {}})
     })
-
     test("path=['a', 'b'] props={0: 'ZERO', 1: 'ONE'}", () => {
       const state = {a: {b: {0: 'zero', 1: 'one'}}, x: {}}
       const next = update(state, ['a', 'b'], {0: 'ZERO', 1: 'ONE'})
       expect(next).toEqual({a: {b: {0: 'ZERO', 1: 'ONE'}}, x: {}})
     })
-
   })
 
   //   // const actual = update(
