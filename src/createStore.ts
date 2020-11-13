@@ -28,8 +28,9 @@ function createStore (initState: any): Store {
     commit: (transform) => {
       const {path, props} = transform
       const prevState = _state
-      _state = update(_state, path, props)  // The next state.
-      _publish(prevState, _state, transform)
+      const nextState = update(_state, path, props)
+      _publish(prevState, nextState, transform)
+      _state = nextState
       return traverse(_state, path)
     },
 
