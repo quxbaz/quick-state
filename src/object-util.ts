@@ -1,10 +1,10 @@
-import {Key, PlainObject} from './types'
+import {Path, PlainObject} from './types'
 
 const isObject = (value: any) => (
   Object.prototype.toString.call(value) === '[object Object]'
 )
 
-function traverse () {
+function traverse (object: PlainObject, path: Path) {
 
 }
 
@@ -24,7 +24,7 @@ function traverse () {
   state. Otherwise, if `props` is a primitive or array, it will
   replace the existing state.
 */
-function update (object: PlainObject, path: Key[], props: any): PlainObject {
+function update (object: PlainObject, path: Path, props: any): PlainObject {
 
   if (path.length === 0) {
     // Warning: You are dynamically creating a top-level
@@ -34,7 +34,7 @@ function update (object: PlainObject, path: Key[], props: any): PlainObject {
     return isObject(props) ? {...object, ...props} : {...object}
   }
 
-  const head: Key = path[0]
+  const head = path[0]
 
   if (path.length === 1) {
     // The BASE CONDITION. You've fully traversed `object` by way of
