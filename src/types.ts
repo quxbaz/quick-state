@@ -1,5 +1,4 @@
 export type PlainObject = Record<string, any>
-export type Path = string[]
 
 export interface Transform {
   name?: string,
