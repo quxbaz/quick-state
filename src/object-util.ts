@@ -29,8 +29,8 @@ function update (object: PlainObject, path: Key[], props: any): PlainObject {
   if (path.length === 0) {
     // Warning: You are dynamically creating a top-level
     // namespace. Normally you would define this in your initial state
-    // object. The only way you would encounter this is if you pass []
-    // as `path`.
+    // object. The only way you would encounter this is if you passed
+    // `[]` as `path`.
     return isObject(props) ? {...object, ...props} : {...object}
   }
 
