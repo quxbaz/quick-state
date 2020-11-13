@@ -1,4 +1,4 @@
-import update from '../src/update'
+import {update} from '../src/object-util'
 
 describe('update()', () => {
 

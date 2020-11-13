@@ -4,6 +4,10 @@ const isObject = (value: any) => (
   Object.prototype.toString.call(value) === '[object Object]'
 )
 
+function traverse () {
+
+}
+
 /*
   Updates an object's value at a path and returns a new object.
 
@@ -55,4 +59,7 @@ function update (object: PlainObject, path: Key[], props: any): PlainObject {
 
 }
 
-export default update
+export {
+  traverse,
+  update,
+}
