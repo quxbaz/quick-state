@@ -21,7 +21,9 @@ function createStore (initState: any): Store {
 
       ::TODO::
       - Handle the case where transform.props is a function. evalTransform.
+      - Handle batched transforms.
       - Tests.
+      - Should _publish run after batch or each transform?
     */
     commit: (transform) => {
       const {path, props} = transform
