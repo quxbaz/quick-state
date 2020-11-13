@@ -1,5 +1,5 @@
-export type Key = string | number
-export type PlainObject = Record<Key, any>
+export type PlainObject = Record<string, any>
+export type Path = string[]
 
 export interface Transform {
   name?: string,
