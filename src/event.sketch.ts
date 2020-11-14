@@ -97,7 +97,8 @@ const onClick = () => {
       that frame and inspect the state prior to that point. Frames provide us
       with a language for denoting signficant time that actual application time
       in the form of `Date.now` does not provide because most time is
-      insignificant. Mostly, nothing happens in an application. Frames only
+      insignificant (also human time ergonomically difficult to work with in
+      this context). Mostly, nothing happens in an application. Frames only
       represent significant time.
 
   */
