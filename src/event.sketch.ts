@@ -101,7 +101,14 @@ const onClick = () => {
       this context). Mostly, nothing happens in an application. Frames only
       represent significant time.
 
+
+    # Problems
+
+    - How do you localize/scope the use availability and effects of events? How
+      does a React component procure event state? How to maximize clarity when
+      there are a lot of events and components?
+
   */
 }
 
-/* End point; interface */
+/* Code sketch */
