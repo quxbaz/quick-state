@@ -12,6 +12,7 @@ const onPreClick = () => {
 
 const onClick = () => {
   /*
+
     - Push event to event queue.
 
     - New state/frame.
@@ -75,6 +76,7 @@ const onClick = () => {
 
     - (This is all synchronous btw.)
 
+
     # Other Stuff
 
     - We get things for free with this approach. Now our app doesn't not need to
@@ -104,11 +106,56 @@ const onClick = () => {
 
     # Problems
 
-    - How do you localize/scope the use availability and effects of events? How
-      does a React component procure event state? How to maximize clarity when
-      there are a lot of events and components?
+    - How do you localize/scope the usage, availability, and effects of events?
+      How does a React component procure event state? How to maximize clarity
+      when there are a lot of events and components?
 
   */
 }
 
 /* Code sketch */
+
+// Button.js
+
+const Button = () => <Button onClick={handleClick} />
+
+function handleClick () {
+  queueEvent(event)  // What is `event` here?
+}
+
+
+
+
+// app.js
+
+while (take(frames) as frame) {
+  // Perform some work with state in frame
+  frame.state.event.forEach((event) => {
+    // This needs to be able to be localized to React components.
+    if (event.type === 'delete-list') {
+      deleteList(event.id)
+    } else if (event.type === 'rename-list') {
+      renameList(event.id, event.text)
+    }
+  })
+  popLastFrame()
+}
+
+// Meta-function. Does not add or remove frames.
+const rewind = () => {
+  app.frame = app.frames[current - 1]
+  triggerFrameRefresh()
+}
+
+// List.js
+
+const List = ({notes}) => {
+  return (
+    <List>
+      <text>Number of notes: {notes.length}</text>
+      <ul>
+        {notes.map(note => <Note />)}
+      </ul>
+    </List>
+  )
+}
