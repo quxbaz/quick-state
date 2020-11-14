@@ -141,7 +141,10 @@ while (take(frames) as frame) {
   popLastFrame()
 }
 
-// Meta-function. Does not add or remove frames.
+// Save each frame state to DISK. Optimize or prematurely calculate/fetch the
+// previous N frame states for quick rewinds.
+
+// This is a meta function. Does not add or remove frames.
 const rewind = () => {
   app.frame = app.frames[current - 1]
   triggerFrameRefresh()
@@ -149,7 +152,40 @@ const rewind = () => {
 
 // List.js
 
-const List = ({notes}) => {
+const List = ({notes, noteFocusEvent}) => {
+  /*
+    [...]
+    How does List handle events on the event queue?
+
+    - `noteFocusEvent` only persists for a single frame.
+
+    How to localize event state among relevant components?
+  */
+  const [noteFocusIndex, setNoteFocusIndex] = useState(0)
+
+  // The frame-based way.
+  if (noteFocusEvent != null) {
+    setNoteFocusIndex(noteFocusIndex.index)
+  }
+
+  // // Potential hook-based way to grab child events.
+  // useEvent('note-focus', (noteFocusEvent) => {
+  //   setNoteFocusIndex(noteFocusEvent.index)
+  // })
+
+  // // The conventional way.
+  // const handleFocus = (i) => {
+  //   setNoteFocusIndex(i)
+  // }
+
+  const [events, setEvents] = useState([])
+  const queueEvent = (e) => () => setEvents([e, ...events])
+  // <Note queueEvent={queueEvent} />
+
+  // Note.js
+  <Note onFocus={queueEvent({type: 'focus-event', index})} />
+  //
+
   return (
     <List>
       <text>Number of notes: {notes.length}</text>
@@ -159,3 +195,14 @@ const List = ({notes}) => {
     </List>
   )
 }
+
+List.propTypes = {
+  notes: Note[],
+  noteFocusEvent: types.Event,
+}
+
+const mapState = (state, {List}) => ({
+  noteFocusEvent: state.eventQueue.find(e => e.type === 'note-focus'),
+})
+
+export connect(mapState)(List)
