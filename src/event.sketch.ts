@@ -21,9 +21,9 @@ const onClick = () => {
       to represent the state, `user-is-clicking` in current state management
       solutions.
 
-    - States can be though of as 'frames.' A frame is a commingled idea of state
-      in the 'state management' sense and a frame in the video game 'frames per
-      second' sense. A frame only exists/occurs if it's different from the
+    - States can be though of as "frames." A frame is a commingled idea of state
+      in the "state management" sense and a frame in the video game "frames per
+      second" sense. A frame only exists/occurs if it's different from the
       previous state.
 
     - Events have prior, immediate, and post states/frames.
@@ -41,13 +41,48 @@ const onClick = () => {
       view rendering. Top-down state-based view representation is fundamentally
       different from event-driven, observer-based rendering.
 
-    - What if... what if we consider each state change to inhabit a 'frame'? The
+    - What if... what if we consider each state change to inhabit a "frame"? The
       frame concept is important here (maybe). The frame is a unit of change and
       a unit of time. In our design, change is the same as time.
 
         1 unit of change === 1 unit of time
 
-    - We want to
+    - We want to update state off events, but we don"t want events to be the
+      terminus and responsibility-holder for calling a store method like
+      `dispatch`. It's not the responsibility of the component callback to take
+      the store and induce these changes. The event callback should be agnostic
+      and "un-powerful" or limited in responsibility. It's important that (1) We
+      are not inducing state changes directly in event handlers and (2) We are
+      not simply for events and inducing state changes off that.
+
+    - So what sort of pattern more closely aligns with funtcional state-based
+      view representation?
+
+    - One idea I've had is to apply the concept of "frames" to the
+      problem. Instead of listening to events in some central place and issuing
+      store changes from there we can instead... Perform some work in each "frame."
+
+    - Each frame is the induction of a new state. A frame stores an event queue,
+      or multiple queues. An event occurrence pushes an event data object onto
+      the queue. This is event represented as state. That forms a new frame
+      because the state has changed. Each frame, work may be performed. In this
+      case, we can inspect the event queue and induce further state changes, or
+      ignore the events and flush the queue.
+
+    - The important point is that we are processing state.
+
+    - We now have a formalized capture of time, whereas before we were ignoring
+      it completely, which leaves us unprepared to deal with a concept like
+      events, which are not intuitively represented as state.
+
+    - Events now ARE represented as state, and they ARE handled with the
+      implicit time parameter now explicit.
+
+    - The approach is somewhat similar to polling. Except in polling a frame
+      measures a unit of actual time where an event occured when that time. For
+      us a frame measures change.
+
+    - (This is all synchronous btw.)
 
   */
 }
