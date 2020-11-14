@@ -180,6 +180,19 @@ const List = ({notes, noteFocusEvent}) => {
 
   const [events, setEvents] = useState([])
   const queueEvent = (e) => () => setEvents([e, ...events])
+
+  const [events, queueEvent] = useQueueEvent()  // Same thing as ^
+
+  /*
+    If you take this approach, every component has to implement their own
+    event-processing loop.
+  */
+  while (events.isNotEmpty) {
+    const e = event.pop()
+    // Do something with `e`
+    setNoteFocusIndex(e.index)
+  }
+
   // <Note queueEvent={queueEvent} />
 
   // Note.js
