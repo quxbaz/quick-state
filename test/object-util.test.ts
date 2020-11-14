@@ -1,7 +1,6 @@
 import {traverse, update} from '../src/object-util'
 
 describe("traverse", () => {
-
   test("Identity check", () => {
     const state = {a: {b: {c: {d: {e: {}}}}}}
     expect(traverse(state, ['a'])).toBe(state.a)
@@ -10,133 +9,111 @@ describe("traverse", () => {
     expect(traverse(state, ['a', 'b', 'c', 'd'])).toBe(state.a.b.c.d)
     expect(traverse(state, ['a', 'b', 'c', 'd', 'e'])).toBe(state.a.b.c.d.e)
   })
-
   test("object={} path=[]", () => {
     expect(
       traverse({}, [])
     ).toBe(undefined)
   })
-
   test("object={a: 1} path=['z']", () => {
     expect(
       traverse({a: 1}, ['z'])
     ).toBe(undefined)
   })
-
   test("object={a: 1} path=['x']", () => {
     expect(
       traverse({a: 1}, ['x'])
     ).toBe(undefined)
   })
-
   test("object={a: 1} path=['x', 'y']", () => {
     expect(
       traverse({a: 1}, ['x', 'y'])
     ).toBe(undefined)
   })
-
   test("object={a: 1} path=['x', 'y', 'z']", () => {
     expect(
       traverse({a: 1}, ['x', 'y', 'z'])
     ).toBe(undefined)
   })
-
   test("object={a: 1} path=['a']", () => {
     expect(
       traverse({a: 1}, ['a'])
     ).toBe(1)
   })
-
   test("object={a: 1, b: 2} path=['a']", () => {
     expect(
       traverse({a: 1, b: 2}, ['a'])
     ).toBe(1)
   })
-
   test("object={a: 1, b: 2, c: 3} path=['a']", () => {
     expect(
       traverse({a: 1, b: 2, c: 3}, ['a'])
     ).toBe(1)
   })
-
   test("object={a: 1, b: 2, c: 3} path=['b']", () => {
     expect(
       traverse({a: 1, b: 2, c: 3}, ['b'])
     ).toBe(2)
   })
-
   test("object={a: 1, b: 2, c: 3} path=['c']", () => {
     expect(
       traverse({a: 1, b: 2, c: 3}, ['c'])
     ).toBe(3)
   })
-
   test("object={a: {b: 2}} path=['a']", () => {
     expect(
       traverse({a: {b: 2}}, ['a'])
     ).toEqual({b: 2})
   })
-
   test("object={a: {b: 2}, c: 3} path=['a']", () => {
     expect(
       traverse({a: {b: 2}, c: 3}, ['a'])
     ).toEqual({b: 2})
   })
-
   test("object={a: {b: 2}} path=['a', 'b']", () => {
     expect(
       traverse({a: {b: 2}}, ['a', 'b'])
     ).toBe(2)
   })
-
   test("object={a: {b: 2}} path=['a', 'b', 'c']", () => {
     expect(
       traverse({a: {b: 2}}, ['a', 'b', 'c'])
     ).toBe(undefined)
   })
-
   test("object={a: {b: 2}} path=['a', 'b', 'd']", () => {
     expect(
       traverse({a: {b: 2}}, ['a', 'b', 'c', 'd'])
     ).toBe(undefined)
   })
-
   test("object={a: {b: {c: 3}} path=[]", () => {
     expect(
       traverse({a: {b: 2}}, [])
     ).toBe(undefined)
   })
-
   test("object={a: {b: {c: 3}} path=['x']", () => {
     expect(
       traverse({a: {b: 2}}, ['x'])
     ).toBe(undefined)
   })
-
   test("object={a: {b: {c: 3}} path=['x', 'y']", () => {
     expect(
       traverse({a: {b: 2}}, ['x', 'y'])
     ).toBe(undefined)
   })
-
   test("object={a: {b: {c: 3}} path=['a']", () => {
     const state = {a: {b: {c: 3}}}
     expect(traverse(state, ['a'])).toBe(state.a)
     expect(traverse(state, ['a'])).toEqual({b: {c: 3}})
   })
-
   test("object={a: {b: {c: 3}} path=['a', 'b']", () => {
     const state = {a: {b: {c: 3}}}
     expect(traverse(state, ['a', 'b'])).toBe(state.a.b)
     expect(traverse(state, ['a', 'b'])).toEqual({c: 3})
   })
-
   test("object={a: {b: {c: 3}} path=['a', 'b', 'c']", () => {
     const state = {a: {b: {c: 3}}}
     expect(traverse(state, ['a', 'b', 'c'])).toBe(state.a.b.c)
     expect(traverse(state, ['a', 'b', 'c'])).toEqual(3)
   })
-
 })
 
 describe('update()', () => {
