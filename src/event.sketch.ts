@@ -86,9 +86,19 @@ const onClick = () => {
 
         state = getFrame(n)
 
-    - Each frame gives us the opportunity to perform some work. We "react"
-      (react is not the right word here, in a programming context. We treat a
-      frame as time) to each frame.
+      A frame can be broken down into individual actions/transfoms/state
+      changes.
+
+    - Each frame gives us the opportunity to perform some work. We "react" to
+      each frame (react is not the right word here though. We treat a frame as
+      normal time, not as an event you "react" to).
+
+    - We can say, for example, a bug occurred at Frame 232. Go to history at
+      that frame and inspect the state prior to that point. Frames provide us
+      with a language for denoting signficant time that actual application time
+      in the form of `Date.now` does not provide because most time is
+      insignificant. Mostly, nothing happens in an application. Frames only
+      represent significant time.
 
   */
 }
