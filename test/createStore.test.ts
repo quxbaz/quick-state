@@ -216,13 +216,13 @@ describe("createStore", () => {
         expect(transform).toEqual({
           type: 'transform-type',
           path: [],
-          props: {a: null}
+          props: {a: null},
         })
       })
       store.commit({
         type: 'transform-type',
         path: [],
-        props: {a: null}
+        props: {a: null},
       })
       expect(i).toBe(1)
     })
