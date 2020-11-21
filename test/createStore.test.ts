@@ -217,6 +217,20 @@ describe("createStore", () => {
       expect(i).toBe(1)
       expect(store.getState()).toEqual({a: 1, b: 2, c: 3})
     })
+    test("Unsubscribe", () => {
+      const store = createStore({})
+      let i = 0
+      const unsub = store.subscribe(() => i++)
+      store.commit({path: [], props: {}})
+      expect(i).toBe(1)
+      unsub()
+      store.commit({path: [], props: {}})
+      expect(i).toBe(1)
+      store.commit({path: [], props: {}})
+      expect(i).toBe(1)
+      store.commit({path: [], props: {}})
+      expect(i).toBe(1)
+    })
   })
 
 })
