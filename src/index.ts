@@ -1,6 +1,6 @@
 import createStore from './createStore'
 
-const __MODULE_NAME__ = 'quick-state'
+const __MODULE__ = 'quick-state'
 
 export {
   __MODULE_NAME__,
