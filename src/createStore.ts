@@ -1,7 +1,23 @@
+/*
+  createStore :: (initState: object) -> Store
+
+  Creates a store instance with the following properties.
+
+    getState :: () -> stateObject
+    -- Returns the store state.
+
+    commit :: (transform) -> void
+    -- Commits a transform object and updates the store state.
+
+    subscribe :: (listener) -> unsubFn
+    -- Subscribe a listener that is called on commit. Returns a function you can
+       call to unsubscribe the listener.
+*/
+
 import {Store, Transform, Listener} from './types'
 import {traverse, update} from './object-util'
 
-function createStore (initState: any): Store {
+function createStore (initState: object): Store {
   let _state = initState
   const _listeners: Listener[] = []
 
@@ -22,8 +38,9 @@ function createStore (initState: any): Store {
     _state = update(_state, path, props)
   }
 
+  // The store instance.
   return {
-    // Internal state. Expose for testing.
+    // Internal state. Expose only for the purpose of testing.
     _state,
     _listeners,
 
