@@ -1,10 +1,7 @@
 Todo
 
 * Todo
-  - [ ] Use function.toString by default if name parameter is missing
-    from transform.
-  - [ ] Rename functions: merge, batchMerge.
-  - [ ] setState should accept `Function` type as props.
+  --
 
 * Features
   --
