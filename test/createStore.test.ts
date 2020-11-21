@@ -217,6 +217,18 @@ describe("createStore", () => {
       expect(i).toBe(1)
       expect(store.getState()).toEqual({a: 1, b: 2, c: 3})
     })
+    test("Multiple subscribes", () => {
+      const store = createStore({})
+      let i = 0
+      store.subscribe(() => i++)
+      store.subscribe(() => i++)
+      store.commit({path: [], props: {a: null}})
+      expect(i).toBe(2)
+      store.commit({path: [], props: {a: null}})
+      expect(i).toBe(4)
+      store.commit({path: [], props: {a: null}})
+      expect(i).toBe(6)
+    })
     test("Unsubscribe", () => {
       const store = createStore({})
       let i = 0
@@ -230,6 +242,43 @@ describe("createStore", () => {
       expect(i).toBe(1)
       store.commit({path: [], props: {}})
       expect(i).toBe(1)
+    })
+    test("Unsubscribe with multiple subscribes", () => {
+      const store = createStore({})
+      let [a, b, c] = [0, 0, 0]
+      const fnA = () => {a++}
+      const fnB = () => {b++}
+      const fnC = () => {c++}
+      const unsubA = store.subscribe(fnA)
+      const unsubB = store.subscribe(fnB)
+      const unsubC = store.subscribe(fnC)
+
+      expect(store._listeners).toEqual([fnA, fnB, fnC])
+      store.commit({path: [], props: {}})
+      expect(a).toBe(1)
+      expect(b).toBe(1)
+      expect(c).toBe(1)
+
+      unsubC()
+      expect(store._listeners).toEqual([fnA, fnB])
+      store.commit({path: [], props: {}})
+      expect(a).toBe(2)
+      expect(b).toBe(2)
+      expect(c).toBe(1)
+
+      unsubB()
+      expect(store._listeners).toEqual([fnA])
+      store.commit({path: [], props: {}})
+      expect(a).toBe(3)
+      expect(b).toBe(2)
+      expect(c).toBe(1)
+
+      unsubA()
+      expect(store._listeners).toEqual([])
+      store.commit({path: [], props: {}})
+      expect(a).toBe(3)
+      expect(b).toBe(2)
+      expect(c).toBe(1)
     })
   })
 
