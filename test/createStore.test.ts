@@ -93,8 +93,22 @@ describe("createStore", () => {
         notes: {},
       })
     })
-    test("Batched transform", () => {
+    test("Batched transform.", () => {
       const store = createStore({users: {}, notes: {}})
+      store.commit([{
+        path: ['users', '1'],
+        map: {id: 1, name: 'foo'}
+      }, {
+        path: ['notes', '2'],
+        map: {id: 2, text: 'bar'}
+      }])
+      expect(store.getState()).toEqual({
+        users: {1: {id: 1, name: 'foo'}},
+        notes: {2: {id: 2, text: 'bar'}},
+      })
+    })
+    test("Batched transform update.", () => {
+      const store = createStore({users: {1: {name: 'FOO'}}, notes: {2: {text: 'BAR'}}})
       store.commit([{
         path: ['users', '1'],
         map: {id: 1, name: 'foo'}
