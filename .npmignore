@@ -1,13 +1,17 @@
-node_modules/
-.log/
-/coverage
-src/
-test/
 package-lock.json
 webpack.config.js
 tsconfig.json
 tsconfig.build.json
 jest.config.js
+
+node_modules/
+.log/
+auto-save-list/
+/coverage
+stats.json
+
+src/
+test/
 /Todo.org
 
 /sketch
