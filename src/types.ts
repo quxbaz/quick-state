@@ -1,17 +1,17 @@
 export type PlainObject = Record<string, any>
 
 export interface Transform {
-  name?: string,
+  type?: string,
   path: string[],
   props: object | Function,
 }
 
-export type Listener = (prevState: any, nextState: any, transform: Transform | Transform[]) => any
+export type Listener = (state: object, prevState: object, transform: Transform | Transform[]) => any
 
 export interface Store {
   _state: any,
   _listeners: Listener[],
-  getState (): any,
-  commit (transform: Transform | Transform[]): any,
+  getState (): object,
+  commit (transform: Transform | Transform[]): void,
   subscribe (listener: Listener): () => Listener,
 }
