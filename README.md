@@ -1,12 +1,12 @@
 # quick-state
 Simple immutable state management library.
 
-In a sentence, `quick-state` provides a `store` object that can be updated
-through something very similar to a React `setState` function.
-
 Like Redux, `quick-state` is essentially an _interface_ to an immutable state
 object. The best way to understand it at a glance is to compare it to Redux. See
 the [comparison with Redux](#Comparison-with-Redux) section.
+
+In a sentence, it provides a `store` object that can be updated with something
+simlar to a `setState` function. No reducers. Direct state management.
 
 [License](#license).
 
