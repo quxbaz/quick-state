@@ -3,7 +3,7 @@ export type PlainObject = Record<string, any>
 export interface Transform {
   name?: string,
   path: string[],
-  props: Function | object,
+  props: object | Function,
 }
 
 export type Listener = (prevState: any, nextState: any, transform: Transform | Transform[]) => any
