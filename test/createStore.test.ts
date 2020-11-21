@@ -10,7 +10,7 @@ describe("createStore", () => {
     })
   })
 
-  describe("store.getState", () => {
+  describe("store.getState()", () => {
     test("It returns the store state.", () => {
       const state = {}
       const store = createStore(state)
@@ -24,11 +24,92 @@ describe("createStore", () => {
     })
   })
 
-  describe("store.commit", () => {
-
+  describe("store.commit()", () => {
+    test("Returns state.", () => {
+      const store = createStore({})
+      store.commit({})
+      expect(store.getState()).toEqual({})
+    })
+    test("{map: {a: 1}}", () => {
+      const store = createStore({})
+      store.commit({map: {a: 1}})
+      expect(store.getState()).toEqual({a: 1})
+    })
+    test("{map: {a: 2}}", () => {
+      const store = createStore({})
+      store.commit({map: {a: 2}})
+      expect(store.getState()).toEqual({a: 2})
+    })
+    test("Commit.", () => {
+      const store = createStore({users: {}})
+      store.commit({
+        path: ['users'],
+        map: {1: {id: 1, name: 'foo'}}
+      })
+      expect(store.getState()).toEqual({
+        users: {1: {id: 1, name: 'foo'}}
+      })
+    })
+    test("Commit.", () => {
+      const store = createStore({users: {}})
+      store.commit({
+        path: ['users', '1'],
+        map: {id: 1, name: 'foo'}
+      })
+      expect(store.getState()).toEqual({
+        users: {1: {id: 1, name: 'foo'}}
+      })
+    })
+    test("Commit.", () => {
+      const store = createStore({users: {}, notes: {}})
+      store.commit({
+        path: ['users', '1'],
+        map: {id: 1, name: 'foo'}
+      })
+      expect(store.getState()).toEqual({
+        users: {1: {id: 1, name: 'foo'}},
+        notes: {},
+      })
+    })
+    test("Update.", () => {
+      const store = createStore({users: {1: {id: 1, name: 'foo'}}, notes: {}})
+      store.commit({
+        path: ['users', '1'],
+        map: {name: 'FOO'}
+      })
+      expect(store.getState()).toEqual({
+        users: {1: {id: 1, name: 'FOO'}},
+        notes: {},
+      })
+    })
+    test("Replace.", () => {
+      const store = createStore({users: {1: {id: 1, name: 'foo'}}, notes: {}})
+      store.commit({
+        path: ['users'],
+        map: {1: {name: 'replaced'}}
+      })
+      expect(store.getState()).toEqual({
+        users: {1: {name: 'replaced'}},
+        notes: {},
+      })
+    })
+    test("Batched transform", () => {
+      const store = createStore({users: {}, notes: {}})
+      store.commit([{
+        path: ['users', '1'],
+        map: {id: 1, name: 'foo'}
+      }, {
+        path: ['notes', '2'],
+        map: {id: 2, text: 'bar'}
+      }])
+      expect(store.getState()).toEqual({
+        users: {1: {id: 1, name: 'foo'}},
+        notes: {2: {id: 2, text: 'bar'}},
+      })
+    })
   })
 
-  describe("store.subscribe", () => {
+  describe("store.subscribe()", () => {
 
   })
 
