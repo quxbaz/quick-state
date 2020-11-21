@@ -33,7 +33,7 @@
 // const removeNoteFromList = (id) => ({
 //   type: 'lists/remove-note-from-list',
 //   path: ['lists', id, 'notes'],
-//   map: (notes) => without(notes, note),
+//   props: (notes) => without(notes, note),
 // })
 
 // const deleteNoteFromList = (id, note) => [
