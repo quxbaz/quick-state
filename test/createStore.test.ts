@@ -25,10 +25,14 @@ describe("createStore", () => {
   })
 
   describe("store.commit()", () => {
-    test("Returns state", () => {
+    test("Gets empty state from empty transform", () => {
       const store = createStore({})
       store.commit({})
       expect(store.getState()).toEqual({})
+    })
+    test("Returns undefined.", () => {
+      const store = createStore({})
+      expect(store.commit({})).toBe(undefined)
     })
     test("{map: {a: 1}}", () => {
       const store = createStore({})
