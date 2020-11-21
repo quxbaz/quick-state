@@ -1,3 +1,6 @@
+[![npm version](https://img.shields.io/npm/v/quick-state.svg)](https://www.npmjs.com/package/quick-state)
+[![license](https://img.shields.io/badge/license-MIT-green.svg)](https://www.mit.edu/~amini/LICENSE.md)
+
 # quick-state
 Simple immutable state management library.
 
