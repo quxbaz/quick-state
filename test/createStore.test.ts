@@ -34,21 +34,21 @@ describe("createStore", () => {
       const store = createStore({})
       expect(store.commit({})).toBe(undefined)
     })
-    test("{map: {a: 1}}", () => {
+    test("{props: {a: 1}}", () => {
       const store = createStore({})
-      store.commit({map: {a: 1}})
+      store.commit({props: {a: 1}})
       expect(store.getState()).toEqual({a: 1})
     })
-    test("{map: {a: 2}}", () => {
+    test("{props: {a: 2}}", () => {
       const store = createStore({})
-      store.commit({map: {a: 2}})
+      store.commit({props: {a: 2}})
       expect(store.getState()).toEqual({a: 2})
     })
     test("Commit", () => {
       const store = createStore({users: {}})
       store.commit({
         path: ['users'],
-        map: {1: {id: 1, name: 'foo'}}
+        props: {1: {id: 1, name: 'foo'}}
       })
       expect(store.getState()).toEqual({
         users: {1: {id: 1, name: 'foo'}}
@@ -58,7 +58,7 @@ describe("createStore", () => {
       const store = createStore({users: {}})
       store.commit({
         path: ['users', '1'],
-        map: {id: 1, name: 'foo'}
+        props: {id: 1, name: 'foo'}
       })
       expect(store.getState()).toEqual({
         users: {1: {id: 1, name: 'foo'}}
@@ -68,7 +68,7 @@ describe("createStore", () => {
       const store = createStore({users: {}, notes: {}})
       store.commit({
         path: ['users', '1'],
-        map: {id: 1, name: 'foo'}
+        props: {id: 1, name: 'foo'}
       })
       expect(store.getState()).toEqual({
         users: {1: {id: 1, name: 'foo'}},
@@ -79,7 +79,7 @@ describe("createStore", () => {
       const store = createStore({users: {1: {id: 1, name: 'foo'}}, notes: {}})
       store.commit({
         path: ['users', '1'],
-        map: {name: 'FOO'}
+        props: {name: 'FOO'}
       })
       expect(store.getState()).toEqual({
         users: {1: {id: 1, name: 'FOO'}},
@@ -90,7 +90,7 @@ describe("createStore", () => {
       const store = createStore({users: {1: {id: 1, name: 'foo'}}, notes: {}})
       store.commit({
         path: ['users'],
-        map: {1: {name: 'replaced'}}
+        props: {1: {name: 'replaced'}}
       })
       expect(store.getState()).toEqual({
         users: {1: {name: 'replaced'}},
@@ -101,10 +101,10 @@ describe("createStore", () => {
       const store = createStore({users: {}, notes: {}})
       store.commit([{
         path: ['users', '1'],
-        map: {id: 1, name: 'foo'}
+        props: {id: 1, name: 'foo'}
       }, {
         path: ['notes', '2'],
-        map: {id: 2, text: 'bar'}
+        props: {id: 2, text: 'bar'}
       }])
       expect(store.getState()).toEqual({
         users: {1: {id: 1, name: 'foo'}},
@@ -115,22 +115,22 @@ describe("createStore", () => {
       const store = createStore({users: {1: {name: 'FOO'}}, notes: {2: {text: 'BAR'}}})
       store.commit([{
         path: ['users', '1'],
-        map: {id: 1, name: 'foo'}
+        props: {id: 1, name: 'foo'}
       }, {
         path: ['notes', '2'],
-        map: {id: 2, text: 'bar'}
+        props: {id: 2, text: 'bar'}
       }])
       expect(store.getState()).toEqual({
         users: {1: {id: 1, name: 'foo'}},
         notes: {2: {id: 2, text: 'bar'}},
       })
     })
-    test("Call with map as function", () => {
+    test("Call with props as function", () => {
       const store = createStore({users: {1: {name: 'Foo'}}})
       let i = 0
       store.commit({
         path: ['users', '1'],
-        map: (user, state) => {
+        props: (user, state) => {
           i++
           return {}
         }
@@ -141,24 +141,50 @@ describe("createStore", () => {
       const store = createStore({users: {1: {name: 'Foo'}}})
       store.commit({
         path: ['users', '1'],
-        map: (user, state) => {
-          expect(user).toEqual({1: {name: 'Foo'}})
+        props: (user, state) => {
+          expect(user).toEqual({name: 'Foo'})
+          expect(user).toBe(state.users[1])
           expect(state).toEqual({users: {1: {name: 'Foo'}}})
           expect(state).toBe(store.getState())
           return {}
         }
       })
+      expect(store.getState()).toEqual({users: {1: {name: 'Foo'}}})
     })
-    test("Call with map as function", () => {
+    test("Call with props as function", () => {
       const store = createStore({users: {1: {name: 'Foo'}}})
       store.commit({
         path: ['users', '1'],
-        map: (user, state) => ({
+        props: (user, state) => ({
           name: 'New name'
         })
       })
       expect(store.getState()).toEqual({
         users: {1: {name: 'New name'}},
+      })
+    })
+    test("Call with props as function in batch", () => {
+      const store = createStore({
+        users: {1: {name: 'Foo'}},
+        notes: {2: {text: 'Bar'}},
+      })
+      store.commit([{
+        path: ['users', '1'],
+        props: (user, state) => ({id: 1, name: 'FOO'}),
+      }, {
+        path: ['notes', '2'],
+        props: (note, state) => ({id: 2, text: 'BAR'}),
+      }, {
+        path: [],
+        props: (state) => {
+          expect(state).toBe(store.getState())
+          return {lists: {}}
+        },
+      }])
+      expect(store.getState()).toEqual({
+        users: {1: {id: 1, name: 'FOO'}},
+        notes: {2: {id: 2, text: 'BAR'}},
+        lists: {},
       })
     })
   })
@@ -168,22 +194,22 @@ describe("createStore", () => {
       const store = createStore({})
       let i = 0
       store.subscribe(() => i++)
-      store.commit({map: {a: null}})
+      store.commit({props: {a: null}})
       expect(i).toBe(1)
-      store.commit({map: {a: null}})
+      store.commit({props: {a: null}})
       expect(i).toBe(2)
-      store.commit({map: {a: null}})
+      store.commit({props: {a: null}})
       expect(i).toBe(3)
-      store.commit({map: {a: null}})
+      store.commit({props: {a: null}})
       expect(i).toBe(4)
-      store.commit({map: {a: null}})
+      store.commit({props: {a: null}})
       expect(i).toBe(5)
     })
     test("Batched transform only publishes once", () => {
       const store = createStore({users: {1: {name: 'FOO'}}, notes: {2: {text: 'BAR'}}})
       let i = 0
       store.subscribe(() => i++)
-      store.commit([{map: {id: 1}}, {map: {id: 2}}])
+      store.commit([{props: {id: 1}}, {props: {id: 2}}])
       expect(i).toBe(1)
     })
   })

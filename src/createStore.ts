@@ -12,7 +12,14 @@ function createStore (initState: any): Store {
 
   // Updates the store state.
   function _commit (transform: Transform) {
-    _state = update(_state, transform.path, transform.map)
+    let {path, props} = transform
+    if (typeof props === 'function') {
+      props = props(
+        path.length === 0 ? _state : traverse(_state, path),
+        _state
+      )
+    }
+    _state = update(_state, path, props)
   }
 
   return {
@@ -25,13 +32,14 @@ function createStore (initState: any): Store {
       `transform`.
 
       ::TODO::
-      - Handle the case where transform.map is a function. evalTransform.
+      - Handle the case where transform.props is a function. evalTransform.
     */
     commit (transform) {
       const prevState = _state
       if (Array.isArray(transform))
         transform.forEach(_commit)
-      _commit(transform)
+      else
+        _commit(transform)
       _publish(prevState, _state, transform)
     },
 

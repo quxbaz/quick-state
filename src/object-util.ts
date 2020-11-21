@@ -9,7 +9,7 @@ const isObject = (value: any) => (
   at that path.
 */
 function traverse (object: PlainObject, path: string[]): any {
-  if (path.length === 0 || object === undefined)
+  if (path == null || path.length === 0 || object === undefined)
     return undefined
   const head = path[0]
   if (path.length === 1)

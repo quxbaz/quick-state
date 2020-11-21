@@ -3,10 +3,10 @@ export type PlainObject = Record<string, any>
 export interface Transform {
   name?: string,
   path?: string[],
-  map?: Function | object,
+  props?: Function | object,
 }
 
-export type Listener = (prevState: any, nextState: any, transform: Transform) => any
+export type Listener = (prevState: any, nextState: any, transform: Transform | Transform[]) => any
 
 export interface Store {
   getState (): any,
