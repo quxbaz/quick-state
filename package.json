@@ -1,7 +1,7 @@
 {
   "name": "quick-state",
   "version": "0.0.1",
-  "description": "Simple, immutable state management library.",
+  "description": "Simple immutable state management library.",
   "author": "quxbaz",
   "license": "MIT",
   "homepage": "https://github.com/quxbaz/quick-state",
