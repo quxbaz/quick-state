@@ -2,8 +2,8 @@ export type PlainObject = Record<string, any>
 
 export interface Transform {
   name?: string,
-  path: string[],
-  props: any,
+  path?: string[],
+  map?: Function | object,
 }
 
 export type Listener = (prevState: any, nextState: any, transform: Transform) => any
