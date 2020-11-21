@@ -206,14 +206,16 @@ describe("createStore", () => {
       expect(i).toBe(5)
     })
     test("Batched transform only publishes once", () => {
-      const store = createStore({users: {1: {name: 'FOO'}}, notes: {2: {text: 'BAR'}}})
+      const store = createStore({})
       let i = 0
       store.subscribe(() => i++)
       store.commit([
-        {path: [], props: {id: 1}},
-        {path: [], props: {id: 2}}
+        {path: [], props: {a: 1}},
+        {path: [], props: {b: 2}},
+        {path: [], props: {c: 3}},
       ])
       expect(i).toBe(1)
+      expect(store.getState()).toEqual({a: 1, b: 2, c: 3})
     })
   })
 
