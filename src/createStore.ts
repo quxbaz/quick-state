@@ -40,7 +40,7 @@ function createStore (initState: any): Store {
         transform.forEach(_commit)
       else
         _commit(transform)
-      _publish(prevState, _state, transform)
+      _publish(_state, prevState, transform)
     },
 
     subscribe (listener) {

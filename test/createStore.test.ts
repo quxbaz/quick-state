@@ -205,6 +205,27 @@ describe("createStore", () => {
       store.commit({path: [], props: {a: null}})
       expect(i).toBe(5)
     })
+    test("Check arguments", () => {
+      const store = createStore({})
+      let i = 0
+      store.subscribe((state, prev, transform) => {
+        i++
+        expect(i).toBe(1)
+        expect(state).toEqual({a: null})
+        expect(prev).toEqual({})
+        expect(transform).toEqual({
+          type: 'transform-type',
+          path: [],
+          props: {a: null}
+        })
+      })
+      store.commit({
+        type: 'transform-type',
+        path: [],
+        props: {a: null}
+      })
+      expect(i).toBe(1)
+    })
     test("Batched transform only publishes once", () => {
       const store = createStore({})
       let i = 0
