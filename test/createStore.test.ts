@@ -125,6 +125,42 @@ describe("createStore", () => {
         notes: {2: {id: 2, text: 'bar'}},
       })
     })
+    test("Call with map as function", () => {
+      const store = createStore({users: {1: {name: 'Foo'}}})
+      let i = 0
+      store.commit({
+        path: ['users', '1'],
+        map: (user, state) => {
+          i++
+          return {}
+        }
+      })
+      expect(i).toBe(1)
+    })
+    test("Check that arguments are correct", () => {
+      const store = createStore({users: {1: {name: 'Foo'}}})
+      store.commit({
+        path: ['users', '1'],
+        map: (user, state) => {
+          expect(user).toEqual({1: {name: 'Foo'}})
+          expect(state).toEqual({users: {1: {name: 'Foo'}}})
+          expect(state).toBe(store.getState())
+          return {}
+        }
+      })
+    })
+    test("Call with map as function", () => {
+      const store = createStore({users: {1: {name: 'Foo'}}})
+      store.commit({
+        path: ['users', '1'],
+        map: (user, state) => ({
+          name: 'New name'
+        })
+      })
+      expect(store.getState()).toEqual({
+        users: {1: {name: 'New name'}},
+      })
+    })
   })
 
   describe("store.subscribe()", () => {
