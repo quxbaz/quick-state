@@ -23,6 +23,10 @@ function createStore (initState: any): Store {
   }
 
   return {
+    // Internal state. Expose for testing.
+    _state,
+    _listeners,
+
     // Gets the current store state.
     getState: () => _state,
 

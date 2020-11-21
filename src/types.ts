@@ -9,6 +9,8 @@ export interface Transform {
 export type Listener = (prevState: any, nextState: any, transform: Transform | Transform[]) => any
 
 export interface Store {
+  _state: any,
+  _listeners: Listener[],
   getState (): any,
   commit (transform: Transform | Transform[]): any,
   subscribe (listener: Listener): () => Listener,
