@@ -206,7 +206,6 @@ describe('update()', () => {
       expect(next.x).toBe(state.x)
       expect(next.y).toBe(state.y)
     })
-
     test("Depth=3", () => {
       const state = {a: {b: {c: {}}}}
       const next = update(state, [], null)
@@ -216,7 +215,6 @@ describe('update()', () => {
       expect(next.a.b).toBe(state.a.b)
       expect(next.a.b.c).toBe(state.a.b.c)
     })
-
     test("Depth=3", () => {
       const state = {a: {b: {c: {}}}}
       const next = update(state, ['a', 'b', 'c'], {})
@@ -226,7 +224,6 @@ describe('update()', () => {
       expect(next.a.b).not.toBe(state.a.b)
       expect(next.a.b.c).not.toBe(state.a.b.c)
     })
-
     test("Depth=4", () => {
       const state = {a: {b: {c: {d: {}}}}}
       const next = update(state, [], null)
@@ -237,7 +234,6 @@ describe('update()', () => {
       expect(next.a.b.c).toBe(state.a.b.c)
       expect(next.a.b.c.d).toBe(state.a.b.c.d)
     })
-
     test("Depth=4", () => {
       const state = {a: {b: {c: {d: {}}}}}
       const next = update(state, ['a', 'b', 'c', 'd'], {})
@@ -248,7 +244,25 @@ describe('update()', () => {
       expect(next.a.b.c).not.toBe(state.a.b.c)
       expect(next.a.b.c.d).not.toBe(state.a.b.c.d)
     })
+  })
 
+  describe("Can take null type path.", () => {
+    test("Handles null.", () => {
+      const next = update({}, null, {})
+      expect(next).toEqual({})
+    })
+    test("Handles undefined.", () => {
+      const next = update({}, undefined, {})
+      expect(next).toEqual({})
+    })
+    test("Handles null with props.", () => {
+      const next = update({}, null, {a: 1})
+      expect(next).toEqual({a: 1})
+    })
+    test("Handles undefined with props.", () => {
+      const next = update({}, undefined, {a: 1})
+      expect(next).toEqual({a: 1})
+    })
   })
 
   describe("Depth=0", () => {
