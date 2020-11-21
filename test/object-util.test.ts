@@ -246,25 +246,6 @@ describe('update()', () => {
     })
   })
 
-  describe("Can take null type path.", () => {
-    test("Handles null.", () => {
-      const next = update({}, null, {})
-      expect(next).toEqual({})
-    })
-    test("Handles undefined.", () => {
-      const next = update({}, undefined, {})
-      expect(next).toEqual({})
-    })
-    test("Handles null with props.", () => {
-      const next = update({}, null, {a: 1})
-      expect(next).toEqual({a: 1})
-    })
-    test("Handles undefined with props.", () => {
-      const next = update({}, undefined, {a: 1})
-      expect(next).toEqual({a: 1})
-    })
-  })
-
   describe("Depth=0", () => {
     test("path=[] props=undefined", () => {
       const next = update({}, [], undefined)

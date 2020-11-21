@@ -27,21 +27,21 @@ describe("createStore", () => {
   describe("store.commit()", () => {
     test("Gets empty state from empty transform", () => {
       const store = createStore({})
-      store.commit({})
+      store.commit({path: [], props: {}})
       expect(store.getState()).toEqual({})
     })
     test("Returns undefined.", () => {
       const store = createStore({})
-      expect(store.commit({})).toBe(undefined)
+      expect(store.commit({path: [], props: {}})).toBe(undefined)
     })
     test("{props: {a: 1}}", () => {
       const store = createStore({})
-      store.commit({props: {a: 1}})
+      store.commit({path: [], props: {a: 1}})
       expect(store.getState()).toEqual({a: 1})
     })
     test("{props: {a: 2}}", () => {
       const store = createStore({})
-      store.commit({props: {a: 2}})
+      store.commit({path: [], props: {a: 2}})
       expect(store.getState()).toEqual({a: 2})
     })
     test("Commit", () => {
@@ -130,7 +130,7 @@ describe("createStore", () => {
       let i = 0
       store.commit({
         path: ['users', '1'],
-        props: (user, state) => {
+        props: (user: object, state: any) => {
           i++
           return {}
         }
@@ -141,7 +141,7 @@ describe("createStore", () => {
       const store = createStore({users: {1: {name: 'Foo'}}})
       store.commit({
         path: ['users', '1'],
-        props: (user, state) => {
+        props: (user: object, state: any) => {
           expect(user).toEqual({name: 'Foo'})
           expect(user).toBe(state.users[1])
           expect(state).toEqual({users: {1: {name: 'Foo'}}})
@@ -155,7 +155,7 @@ describe("createStore", () => {
       const store = createStore({users: {1: {name: 'Foo'}}})
       store.commit({
         path: ['users', '1'],
-        props: (user, state) => ({
+        props: (user: object, state: any) => ({
           name: 'New name'
         })
       })
@@ -170,13 +170,13 @@ describe("createStore", () => {
       })
       store.commit([{
         path: ['users', '1'],
-        props: (user, state) => ({id: 1, name: 'FOO'}),
+        props: (user: object, state: any) => ({id: 1, name: 'FOO'}),
       }, {
         path: ['notes', '2'],
-        props: (note, state) => ({id: 2, text: 'BAR'}),
+        props: (note: object, state: any) => ({id: 2, text: 'BAR'}),
       }, {
         path: [],
-        props: (state) => {
+        props: (state: any) => {
           expect(state).toBe(store.getState())
           return {lists: {}}
         },
@@ -194,22 +194,25 @@ describe("createStore", () => {
       const store = createStore({})
       let i = 0
       store.subscribe(() => i++)
-      store.commit({props: {a: null}})
+      store.commit({path: [], props: {a: null}})
       expect(i).toBe(1)
-      store.commit({props: {a: null}})
+      store.commit({path: [], props: {a: null}})
       expect(i).toBe(2)
-      store.commit({props: {a: null}})
+      store.commit({path: [], props: {a: null}})
       expect(i).toBe(3)
-      store.commit({props: {a: null}})
+      store.commit({path: [], props: {a: null}})
       expect(i).toBe(4)
-      store.commit({props: {a: null}})
+      store.commit({path: [], props: {a: null}})
       expect(i).toBe(5)
     })
     test("Batched transform only publishes once", () => {
       const store = createStore({users: {1: {name: 'FOO'}}, notes: {2: {text: 'BAR'}}})
       let i = 0
       store.subscribe(() => i++)
-      store.commit([{props: {id: 1}}, {props: {id: 2}}])
+      store.commit([
+        {path: [], props: {id: 1}},
+        {path: [], props: {id: 2}}
+      ])
       expect(i).toBe(1)
     })
   })

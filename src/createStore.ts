@@ -28,11 +28,7 @@ function createStore (initState: any): Store {
 
     /*
       Merges a transform object into the store state. Calls listeners. Returns
-      the transformed slice of state with respect to the `path` property in
-      `transform`.
-
-      ::TODO::
-      - Handle the case where transform.props is a function. evalTransform.
+      the transformed slice of state with respect to the `path` property in `transform`.
     */
     commit (transform) {
       const prevState = _state

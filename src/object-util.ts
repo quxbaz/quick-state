@@ -9,7 +9,7 @@ const isObject = (value: any) => (
   at that path.
 */
 function traverse (object: PlainObject, path: string[]): any {
-  if (path == null || path.length === 0 || object === undefined)
+  if (path.length === 0 || object === undefined)
     return undefined
   const head = path[0]
   if (path.length === 1)
@@ -35,7 +35,7 @@ function traverse (object: PlainObject, path: string[]): any {
 */
 function update (object: PlainObject, path: string[], props: any): PlainObject {
 
-  if (path == null || path.length === 0) {
+  if (path.length === 0) {
     // Warning: You are dynamically creating a top-level
     // namespace. Normally you would define this in your initial state
     // object. The only way you would encounter this is if you passed
