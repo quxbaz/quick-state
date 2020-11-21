@@ -11,5 +11,5 @@ export type Listener = (prevState: any, nextState: any, transform: Transform | T
 export interface Store {
   getState (): any,
   commit (transform: Transform | Transform[]): any,
-  subscribe (listener: Listener): void,
+  subscribe (listener: Listener): () => Listener,
 }

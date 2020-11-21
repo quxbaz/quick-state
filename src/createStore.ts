@@ -39,9 +39,10 @@ function createStore (initState: any): Store {
       _publish(prevState, _state, transform)
     },
 
-    // ::TODO:: This should return an unsub function.
     subscribe (listener) {
       _listeners.push(listener)
+      // Returns an unsub function, that returns the unsubbed listener.
+      return () => _listeners.splice(_listeners.indexOf(listener), 1)[0]
     },
   }
 }
