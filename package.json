@@ -34,7 +34,7 @@
     "type-check": "tsc --watch --noEmit --pretty",
     "test": "jest --watch",
     "test-ci": "jest --coverage --no-cache",
-    "build": "tsc --project tsconfig.build.json",
+    "build": "rollup -c rollup.config.js",
     "prepublishOnly": "npm run build",
     "postpublish": "rm -r lib/"
   },
