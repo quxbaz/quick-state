@@ -494,13 +494,72 @@ describe('update()', () => {
   })
 
   describe("updateType: 'replace'", () => {
+    const state = {
+      lists: {
+        0: {id: 0, title: 'list-0'},
+        1: {id: 1, title: 'list-1'},
+      },
+      notes: {
+        a: {id: 'a', title: 'note-0'},
+        b: {id: 'b', title: 'note-1'},
+      },
+    }
     test("test", () => {
-      const state = {
-        lists: {0: {id: 0, title: 'list-0'}, 1: {id: 1, title: 'list-1'}},
-        notes: {a: {id: 'a', title: 'note-0'}, b: {id: 'b', title: 'note-1'}},
-      }
       const next = update(state, [], {}, 'replace')
       expect(next).toEqual({})
+    })
+    test("test", () => {
+      const next = update(state, [], {foo: 'bar'}, 'replace')
+      expect(next).toEqual({foo: 'bar'})
+    })
+    test("test", () => {
+      const next = update(state, ['lists'], {}, 'replace')
+      expect(next).toEqual({
+        lists: {},
+        notes: {a: {id: 'a', title: 'note-0'}, b: {id: 'b', title: 'note-1'}},
+      })
+    })
+    test("test", () => {
+      const next = update(state, ['lists'], null, 'replace')
+      expect(next).toEqual({
+        lists: null,
+        notes: {a: {id: 'a', title: 'note-0'}, b: {id: 'b', title: 'note-1'}},
+      })
+    })
+    test("test", () => {
+      const next = update(state, ['notes'], null, 'replace')
+      expect(next).toEqual({
+        lists: {0: {id: 0, title: 'list-0'}, 1: {id: 1, title: 'list-1'}},
+        notes: null,
+      })
+    })
+    test("test", () => {
+      const next = update(state, ['lists', '0'], null, 'replace')
+      expect(next).toEqual({
+        lists: {0: null, 1: {id: 1, title: 'list-1'}},
+        notes: {a: {id: 'a', title: 'note-0'}, b: {id: 'b', title: 'note-1'}},
+      })
+    })
+    test("test", () => {
+      const next = update(state, ['lists', '0'], {}, 'replace')
+      expect(next).toEqual({
+        lists: {0: {}, 1: {id: 1, title: 'list-1'}},
+        notes: {a: {id: 'a', title: 'note-0'}, b: {id: 'b', title: 'note-1'}},
+      })
+    })
+    test("test", () => {
+      const next = update(state, ['lists', '0'], {foo: 'bar'}, 'replace')
+      expect(next).toEqual({
+        lists: {0: {foo: 'bar'}, 1: {id: 1, title: 'list-1'}},
+        notes: {a: {id: 'a', title: 'note-0'}, b: {id: 'b', title: 'note-1'}},
+      })
+    })
+    test("test", () => {
+      const next = update(state, ['lists', '0', 'title'], 'New Title', 'replace')
+      expect(next).toEqual({
+        lists: {0: {id: 0, title: 'New Title'}, 1: {id: 1, title: 'list-1'}},
+        notes: {a: {id: 'a', title: 'note-0'}, b: {id: 'b', title: 'note-1'}},
+      })
     })
   })
 
