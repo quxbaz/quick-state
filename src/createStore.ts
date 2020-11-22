@@ -35,7 +35,7 @@ function createStore (initState: object): Store {
         _state
       )
     }
-    _state = update(_state, path, props)
+    _state = update(_state, path, props, transform.updateType)
   }
 
   // The store instance.
