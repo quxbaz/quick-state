@@ -187,6 +187,54 @@ describe("createStore", () => {
         lists: {},
       })
     })
+    test("transform with updateType='replace'", () => {
+      const store = createStore({users: {1: {id: 1, name: 'user-1'}}, notes: {}})
+      store.commit({
+        path: ['users', '1'],
+        updateType: 'replace',
+        props: {},
+      })
+      expect(store.getState()).toEqual({
+        users: {1: {}},
+        notes: {},
+      })
+    })
+    test("transform with updateType='replace'", () => {
+      const store = createStore({users: {1: {id: 1, name: 'user-1'}}, notes: {}})
+      store.commit({
+        path: ['users', '1'],
+        updateType: 'replace',
+        props: null,
+      })
+      expect(store.getState()).toEqual({
+        users: {1: null},
+        notes: {},
+      })
+    })
+    test("transform with updateType='replace'", () => {
+      const store = createStore({users: {1: {id: 1, name: 'user-1'}}, notes: {}})
+      store.commit({
+        path: ['users', '1'],
+        updateType: 'replace',
+        props: {foo: 'bar'},
+      })
+      expect(store.getState()).toEqual({
+        users: {1: {foo: 'bar'}},
+        notes: {},
+      })
+    })
+    test("transform with updateType='replace'", () => {
+      const store = createStore({users: {1: {id: 1, name: 'user-1'}}, notes: {}})
+      store.commit({
+        path: ['users', '1'],
+        updateType: 'replace',
+        props: () => ({foo: 'bar'}),
+      })
+      expect(store.getState()).toEqual({
+        users: {1: {foo: 'bar'}},
+        notes: {},
+      })
+    })
   })
 
   describe("store.subscribe()", () => {
