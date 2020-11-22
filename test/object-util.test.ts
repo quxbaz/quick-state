@@ -1,5 +1,26 @@
 import {traverse, update} from '../src/object-util'
 
+// Helper functions
+
+type Key = string | number
+type Obj<T> = Record<Key, T>
+
+/**
+ * Omits props from an object and returns a new object.
+ *
+ * @param {object} obj
+ * @param {...string} props
+ *
+ * @return {object}
+ */
+const omit = <T>(obj: Obj<T>, ...keys: Key[]): typeof obj => {
+  const o: typeof obj = {...obj}
+  keys.forEach(key => delete o[key])
+  return o
+}
+
+// End helper functions
+
 describe("traverse", () => {
   test("Identity check", () => {
     const state = {a: {b: {c: {d: {e: {}}}}}}
@@ -472,6 +493,17 @@ describe('update()', () => {
     })
   })
 
+  describe("updateType: 'replace'", () => {
+    test("test", () => {
+      const state = {
+        lists: {0: {id: 0, title: 'list-0'}, 1: {id: 1, title: 'list-1'}},
+        notes: {a: {id: 'a', title: 'note-0'}, b: {id: 'b', title: 'note-1'}},
+      }
+      const next = update(state, [], {}, 'replace')
+      expect(next).toEqual({})
+    })
+  })
+
   describe("Arrays are replaced, not mutated", () => {
     test("[] -> []", () => {
       const state = {a: []}
@@ -545,6 +577,28 @@ describe('update()', () => {
       const next = update(state, ['lists', '3'], {id: '3', title: 'Tools', notes: []})
       expect(next).toEqual({
         ...state, lists: {...state.lists, 3: {id: '3', title: 'Tools', notes: []}},
+      })
+    })
+    test("test", () => {
+      const next = update(state, ['lists', '0', 'title'], 'FOOD')
+      expect(next).toEqual({
+        ...state, lists: {...state.lists, 0: {id: '0', title: 'FOOD', notes: ['a', 'b']}},
+      })
+    })
+    test("test", () => {
+      const next = update(state, ['lists', '0'], {hello: 'world'}, 'replace')
+      expect(next).toEqual({
+        ...state, lists: {...state.lists, 0: {hello: 'world'}},
+      })
+    })
+    test("test", () => {
+      const next = update(state, ['lists'], omit(state.lists, '2'), 'replace')
+      expect(next).toEqual({
+        ...state,
+        lists: {
+          0: {id: '0', title: 'Food', notes: ['a', 'b']},
+          1: {id: '1', title: 'Chores', notes: ['c', 'd']},
+        },
       })
     })
   })
