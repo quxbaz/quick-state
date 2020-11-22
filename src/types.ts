@@ -5,7 +5,7 @@ export interface Transform {
   type?: string,
   path: string[],
   updateType?: UpdateType,
-  props: object | Function,
+  props: any,
 }
 
 export type Listener = (state: object, prevState: object, transform: Transform | Transform[]) => any
