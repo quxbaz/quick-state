@@ -1,6 +1,4 @@
-import {PlainObject} from './types'
-
-type UpdateType = 'merge' | 'replace'
+import {PlainObject, UpdateType} from './types'
 
 const isObject = (value: any) => (
   Object.prototype.toString.call(value) === '[object Object]'

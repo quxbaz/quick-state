@@ -1,8 +1,10 @@
 export type PlainObject = Record<string, any>
+export type UpdateType = 'merge' | 'replace'
 
 export interface Transform {
   type?: string,
   path: string[],
+  updateType?: UpdateType,
   props: object | Function,
 }
 
