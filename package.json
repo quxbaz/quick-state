@@ -34,5 +34,8 @@
     "build": "tsc --project tsconfig.build.json",
     "prepublishOnly": "npm run build",
     "postpublish": "rm -r lib/"
+  },
+  "dependencies": {
+    "qwux": "^1.5.3"
   }
 }
