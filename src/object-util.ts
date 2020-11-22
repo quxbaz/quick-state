@@ -39,13 +39,19 @@ function traverse (object: PlainObject, path: string[]): any {
   value at `path` is an object. Arrays are always replaced.
 */
 type Update = (object: PlainObject, path: string[], props: any, updateType?: UpdateType) => PlainObject
-const update: Update = (object, path, props, updateType='merge') => {
+const update: Update = (object, path, props, updateType = 'merge') => {
 
   if (path.length === 0) {
     // Warning: You are dynamically creating a top-level namespace. Normally you
     // would define this in your initial state object. The only way you would
     // encounter this is if you passed `[]` as `path`.
-    return isObject(props) ? {...object, ...props} : {...object}
+    if (updateType === 'replace') {
+      // Replace the value at `path` with `props`.
+      return props
+    } else {
+      // Merge the existing value at `path` with `props`.
+      return isObject(props) ? {...object, ...props} : {...object}
+    }
   }
 
   const head = path[0]
@@ -53,9 +59,12 @@ const update: Update = (object, path, props, updateType='merge') => {
   if (path.length === 1) {
     // The BASE CONDITION. You've fully traversed `object` by way of evaluating
     // each element in `path`. Updates the value at the destination.
-    return {
-      ...object,
-      [head]: isObject(props) ? {...object[head], ...props} : props,
+    if (updateType === 'replace') {
+      // Replace the value at `path` with `props`.
+      return {...object, [head]: props}
+    } else {
+      // Merge the existing value at `path` with `props`.
+      return {...object, [head]: isObject(props) ? {...object[head], ...props} : props}
     }
   }
 
