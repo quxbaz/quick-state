@@ -35,7 +35,5 @@
     "prepublishOnly": "npm run build",
     "postpublish": "rm -r lib/"
   },
-  "dependencies": {
-    "qwux": "^1.5.3"
-  }
+  "dependencies": {}
 }
