@@ -5,7 +5,7 @@
   "author": "quxbaz",
   "license": "MIT",
   "homepage": "https://github.com/quxbaz/quick-state",
-  "main": "lib/quick-state.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "github.com/quxbaz/quick-state.git"
