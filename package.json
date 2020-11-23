@@ -24,17 +24,14 @@
     "@types/jest": "^26.0.15",
     "codecov": "^3.8.1",
     "jest": "^26.6.1",
-    "rollup": "^2.33.3",
-    "rollup-plugin-typescript2": "^0.29.0",
     "ts-jest": "^26.4.3",
-    "tslib": "^2.0.3",
     "typescript": "^4.0.5"
   },
   "scripts": {
     "type-check": "tsc --watch --noEmit --pretty",
     "test": "jest --watch",
-    "test-ci": "jest --coverage --no-cache",
-    "build": "rollup -c rollup.config.js",
+    "test:ci": "jest --coverage --no-cache",
+    "build": "tsc --project tsconfig.build.json",
     "prepublishOnly": "npm run build",
     "postpublish": "rm -r lib/"
   },

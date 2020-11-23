@@ -1,9 +1,7 @@
 Todo
 
 * Todo
-  - [ ] Generate types declaration file.
-  - [ ] Link ^ in package.json.
-  - [ ] Ignore rollup config in other projects.
+  --
 
 * Features
   --
