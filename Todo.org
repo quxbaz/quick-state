@@ -2,6 +2,7 @@ Todo
 
 * Todo
   - [ ] Write Readme.
+  - [ ] Write tsdoc-style comments that work with editor.
 
 * Build
   - [ ] Use rollup.
