@@ -1,7 +1,15 @@
 Todo
 
 * Todo
-  --
+  - [ ] Write Readme.
+
+* Build
+  - [ ] Use rollup.
+  - [ ] Generate type defs.
+  - [ ] One lib/js file.
+  - [ ] One lib/d.ts file.
+  - [ ] One lib/js map file.
+  - [ ] One lib/d.ts map file.
 
 * Features
   --
